@@ -654,7 +654,7 @@
 
     .modal__dialog {
       position: relative;
-      width: min(1240px, calc(100% - 30px));
+      width: min(1280px, calc(100% - 30px));
       max-height: calc(100vh - 30px);
       margin: 15px auto;
       background: #e3dfda;
@@ -665,7 +665,7 @@
     }
 
     .modal__dialog--project {
-      height: min(860px, calc(100vh - 30px));
+      height: min(880px, calc(100vh - 30px));
       display: flex;
       flex-direction: column;
     }
@@ -734,7 +734,7 @@
 
     .project-modal__body {
       display: grid;
-      grid-template-columns: minmax(0, 1.18fr) minmax(380px, 0.82fr);
+      grid-template-columns: minmax(0, 1.08fr) minmax(460px, 0.92fr);
       min-height: 0;
       flex: 1;
     }
@@ -832,7 +832,7 @@
 
     .project-modal__aside {
       display: grid;
-      grid-template-rows: minmax(120px, 0.55fr) minmax(300px, 1.45fr);
+      grid-template-rows: auto minmax(320px, 1fr);
       min-height: 0;
       overflow: hidden;
     }
@@ -841,6 +841,7 @@
       padding: 22px 24px 16px;
       overflow: auto;
       min-height: 0;
+      max-height: min(300px, 34vh);
       scrollbar-width: thin;
       scrollbar-color: rgba(27, 35, 44, 0.24) transparent;
     }
@@ -1058,7 +1059,11 @@
       }
 
       .project-modal__aside {
-        grid-template-rows: minmax(120px, 0.55fr) minmax(260px, 1.45fr);
+        grid-template-rows: auto minmax(260px, 1fr);
+      }
+
+      .project-modal__content {
+        max-height: 260px;
       }
     }
 
@@ -1118,7 +1123,7 @@
       }
 
       .modal__dialog {
-        width: min(1240px, calc(100% - 16px));
+        width: min(1280px, calc(100% - 16px));
         max-height: calc(100vh - 16px);
         margin: 8px auto;
         border-radius: 22px;
@@ -1139,6 +1144,7 @@
 
       .project-modal__content {
         padding: 18px 18px 14px;
+        max-height: 220px;
       }
 
       .project-modal__thumbs-wrap {
@@ -1237,12 +1243,12 @@
             <p class="section-kicker">Портфолио</p>
             <h2 class="section-title">Серии и направления работы</h2>
             <p class="section-text">
-              Основной акцент — репортаж. Структура сайта сохраняет и другие линии работы:
-              постановочные, творческие, бэкстейджевые и природные серии. По мере наполнения
-              новые проекты добавляются в те же разделы.
+              Основной акцент — репортаж. Но структура сайта сохраняет и другие линии работы:
+              постановочные и авторские серии. Каждый проект открывается как отдельная глава
+              со своей галереей и кратким описанием.
             </p>
           </div>
-          <div class="section-note">Сайт собран по принципу серий, а не россыпи отдельных кадров</div>
+          <div class="section-note">Реальные серии, без пустых карточек и заглушек</div>
         </div>
 
         <div id="filters"></div>
@@ -1520,6 +1526,27 @@
           "images/reportage-zadonsk-vokrug/16.jpg",
           "images/reportage-zadonsk-vokrug/17.jpg",
           "images/reportage-zadonsk-vokrug/18.jpg"
+        ]
+      },
+      {
+        id: "studiynaya-photoset-vereteno",
+        category: "studio",
+        title: "Светлана. Noir & Rock Chic",
+        year: "2025",
+        place: "Студия",
+        short: "Черно-белая студийная серия с актрисой Светланой, выстроенная по моему брифу на основе нуара, старого кино и жесткого драматического света.",
+        description:
+          "Студийная серия с актрисой Светланой. Съемка строилась по разработанному мной брифу и заранее собранным референсам: черно-белая классика, интонация нуара и старого кино, жесткий драматический свет, вуаль, кожа, фактура ткани и более роковая пластика кадра. Для меня здесь было важно соединить точную световую схему с живой актерской выразительностью — так, чтобы серия оставалась одновременно собранной, пластичной и эмоционально открытой.",
+        cover: "images/studiynaya-photoset-vereteno/cover.jpg",
+        images: [
+          "images/studiynaya-photoset-vereteno/01.jpg",
+          "images/studiynaya-photoset-vereteno/02.jpg",
+          "images/studiynaya-photoset-vereteno/03.jpg",
+          "images/studiynaya-photoset-vereteno/04.jpg",
+          "images/studiynaya-photoset-vereteno/05.jpg",
+          "images/studiynaya-photoset-vereteno/06.jpg",
+          "images/studiynaya-photoset-vereteno/07.jpg",
+          "images/studiynaya-photoset-vereteno/08.jpg"
         ]
       },
       {
