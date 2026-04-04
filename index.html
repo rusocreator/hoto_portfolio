@@ -31,6 +31,9 @@
       --panel-soft: #242c34;
       --white: #ffffff;
 
+      --viewer-bg: #d5d5d5;
+      --viewer-surface: #c8c8c8;
+
       --shadow-soft: 0 10px 28px rgba(15, 20, 26, 0.05);
       --shadow-card: 0 20px 50px rgba(15, 20, 26, 0.08);
 
@@ -661,6 +664,12 @@
       box-shadow: 0 30px 80px rgba(8, 14, 20, 0.20);
     }
 
+    .modal__dialog--project {
+      height: min(860px, calc(100vh - 30px));
+      display: flex;
+      flex-direction: column;
+    }
+
     .modal__dialog--bio {
       width: min(940px, calc(100% - 30px));
     }
@@ -673,6 +682,7 @@
       padding: 22px 24px;
       border-bottom: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.24);
+      flex-shrink: 0;
     }
 
     .modal__title-wrap {
@@ -724,66 +734,90 @@
 
     .project-modal__body {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-      min-height: 540px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
+      min-height: 0;
+      flex: 1;
     }
 
     .project-modal__viewer {
       padding: 20px;
       border-right: 1px solid var(--line);
-      background: #d9d5d0;
+      background: var(--viewer-bg);
+      min-height: 0;
     }
 
     .project-modal__image-wrap {
       position: relative;
       height: 100%;
-      min-height: 380px;
+      min-height: 0;
       border-radius: 22px;
       overflow: hidden;
-      background: #beb9b2;
+      background: var(--viewer-surface);
       border: 1px solid rgba(27, 35, 44, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .project-modal__image {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #beb9b2;
+      background: var(--viewer-surface);
+      cursor: zoom-in;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .project-modal__nav {
       position: absolute;
-      inset: auto 18px 18px auto;
+      right: 18px;
+      bottom: 18px;
       display: flex;
       gap: 10px;
+      z-index: 3;
     }
 
     .project-modal__nav button {
       appearance: none;
       border: 1px solid rgba(255, 255, 255, 0.24);
-      background: rgba(18, 28, 40, 0.58);
+      background: rgba(18, 28, 40, 0.62);
       color: var(--white);
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       cursor: pointer;
-      transition: background var(--transition), transform var(--transition);
+      transition: background var(--transition), transform var(--transition), opacity var(--transition);
+      font-size: 19px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
     }
 
     .project-modal__nav button:hover {
       transform: translateY(-1px);
-      background: rgba(18, 28, 40, 0.78);
+      background: rgba(18, 28, 40, 0.82);
+    }
+
+    .project-modal__nav button:disabled {
+      opacity: 0.45;
+      cursor: default;
+      transform: none;
     }
 
     .project-modal__aside {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) minmax(180px, 320px);
       min-height: 0;
+      overflow: hidden;
     }
 
     .project-modal__content {
-      padding: 22px 24px 10px;
+      padding: 22px 24px 18px;
       overflow: auto;
+      min-height: 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(27, 35, 44, 0.24) transparent;
     }
 
     .project-modal__meta {
@@ -806,7 +840,30 @@
 
     .project-modal__thumbs-wrap {
       padding: 14px 24px 24px;
-      margin-top: auto;
+      border-top: 1px solid var(--line);
+      overflow: auto;
+      min-height: 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(27, 35, 44, 0.24) transparent;
+    }
+
+    .project-modal__thumbs-wrap::-webkit-scrollbar,
+    .project-modal__content::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    .project-modal__thumbs-wrap::-webkit-scrollbar-track,
+    .project-modal__content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .project-modal__thumbs-wrap::-webkit-scrollbar-thumb,
+    .project-modal__content::-webkit-scrollbar-thumb {
+      background: rgba(27, 35, 44, 0.20);
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
     }
 
     .project-modal__thumbs-label {
@@ -821,6 +878,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
+      align-content: start;
     }
 
     .thumb {
@@ -832,7 +890,8 @@
       overflow: hidden;
       cursor: pointer;
       aspect-ratio: 1 / 1;
-      transition: border-color var(--transition), transform var(--transition);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 0 0 1px rgba(27, 35, 44, 0.04) inset;
     }
 
     .thumb:hover {
@@ -841,6 +900,7 @@
 
     .thumb.is-active {
       border-color: var(--ink);
+      box-shadow: 0 0 0 1px rgba(27, 35, 44, 0.20);
     }
 
     .thumb img {
@@ -905,13 +965,30 @@
       padding-top: 0;
     }
 
+    .project-modal__image-wrap:fullscreen,
+    .project-modal__image-wrap:-webkit-full-screen {
+      background: #8f8f8f;
+      border-radius: 0;
+      border: 0;
+    }
+
+    .project-modal__image-wrap:fullscreen .project-modal__image,
+    .project-modal__image-wrap:-webkit-full-screen .project-modal__image {
+      background: #8f8f8f;
+    }
+
+    .project-modal__image-wrap:fullscreen .project-modal__nav,
+    .project-modal__image-wrap:-webkit-full-screen .project-modal__nav {
+      right: 24px;
+      bottom: 24px;
+    }
+
     .hidden {
       display: none !important;
     }
 
     @media (max-width: 1180px) {
       .hero__grid,
-      .project-modal__body,
       .contact-panel__grid,
       .bio-modal__body {
         grid-template-columns: 1fr;
@@ -923,6 +1000,20 @@
 
       .approach-grid {
         grid-template-columns: 1fr;
+      }
+
+      .project-modal__body {
+        grid-template-columns: 1fr;
+      }
+
+      .project-modal__viewer {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        min-height: 46vh;
+      }
+
+      .project-modal__aside {
+        grid-template-rows: minmax(0, 1fr) minmax(180px, 280px);
       }
     }
 
@@ -981,20 +1072,51 @@
         display: none;
       }
 
+      .modal__dialog {
+        width: min(1240px, calc(100% - 16px));
+        max-height: calc(100vh - 16px);
+        margin: 8px auto;
+        border-radius: 22px;
+      }
+
+      .modal__dialog--project {
+        height: calc(100vh - 16px);
+      }
+
+      .modal__header {
+        padding: 18px 18px;
+      }
+
       .project-modal__viewer {
-        padding: 14px;
+        padding: 12px;
+        min-height: 38vh;
+      }
+
+      .project-modal__content {
+        padding: 18px 18px 14px;
+      }
+
+      .project-modal__thumbs-wrap {
+        padding: 12px 18px 18px;
       }
 
       .project-modal__thumbs {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .modal__title {
-        font-size: 24px;
+      .project-modal__nav {
+        right: 12px;
+        bottom: 12px;
       }
 
-      .project-modal__image-wrap {
-        min-height: 280px;
+      .project-modal__nav button {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+      }
+
+      .modal__title {
+        font-size: 24px;
       }
     }
 
@@ -1169,7 +1291,7 @@
   <div class="modal" id="projectModal" aria-hidden="true">
     <div class="modal__backdrop" data-close-project></div>
 
-    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="modal__dialog modal__dialog--project" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
       <div class="modal__header">
         <div class="modal__title-wrap">
           <div class="modal__eyebrow" id="projectModalEyebrow">Серия</div>
@@ -1181,11 +1303,12 @@
 
       <div class="project-modal__body">
         <div class="project-modal__viewer">
-          <div class="project-modal__image-wrap">
+          <div class="project-modal__image-wrap" id="projectImageWrap">
             <img class="project-modal__image" id="projectMainImage" src="" alt="" />
             <div class="project-modal__nav">
               <button type="button" id="prevImageButton" aria-label="Предыдущее фото">←</button>
               <button type="button" id="nextImageButton" aria-label="Следующее фото">→</button>
+              <button type="button" id="fullscreenImageButton" aria-label="Открыть фото на весь экран">⤢</button>
             </div>
           </div>
         </div>
@@ -1288,38 +1411,25 @@
     };
 
     const portfolioData = [
-     {
-  id: "reportage-akhmatova1",
-  category: "reportage",
-  title: "Открытие выставки Алексея Хвостенко",
-  year: "2024",
-  place: "Музей Анны Ахматовой, Санкт-Петербург",
-  short: "Репортаж с открытия экспозиции, посвященной Алексею Хвостенко — поэту, художнику и автору песен.",
-  description:
-    "Серия снята на открытии выставки в Музее Анны Ахматовой, посвященной Алексею Львовичу Хвостенко — поэту, художнику и автору песен. В этой съемке меня интересовали атмосфера музейного события, поведение зрителей, жесты, лица, свет и внутренняя пластика пространства. Черно-белое решение помогает собрать серию в более цельную и сдержанную интонацию.",
-  cover: "images/reportage-akhmatova1/cover.jpg",
-  images: [
-    "images/reportage-akhmatova1/01.jpg",
-    "images/reportage-akhmatova1/02.jpg",
-    "images/reportage-akhmatova1/03.jpg",
-    "images/reportage-akhmatova1/04.jpg",
-    "images/reportage-akhmatova1/05.jpg",
-    "images/reportage-akhmatova1/06.jpg",
-    "images/reportage-akhmatova1/07.jpg",
-    "images/reportage-akhmatova1/08.jpg",
-    "images/reportage-akhmatova1/09.jpg",
-    "images/reportage-akhmatova1/10.jpg",
-    "images/reportage-akhmatova1/11.jpg",
-    "images/reportage-akhmatova1/12.jpg",
-    "images/reportage-akhmatova1/13.jpg",
-    "images/reportage-akhmatova1/14.jpg",
-    "images/reportage-akhmatova1/15.jpg",
-    "images/reportage-akhmatova1/16.jpg",
-    "images/reportage-akhmatova1/17.jpg",
-    "images/reportage-akhmatova1/18.jpg",
-    "images/reportage-akhmatova1/19.jpg"
-  ]
-},
+      {
+        id: "theatre-reportage",
+        category: "reportage",
+        title: "Театральный репортаж",
+        year: "2024",
+        place: "Санкт-Петербург",
+        short: "Сцена, свет, пластика актеров и жизнь спектакля в моменте.",
+        description:
+          "Серия о театральном пространстве как о живом организме. Здесь важны не только мизансцена и событие, но и переходы света, паузы, напряжение до и после жеста, отношение актера и среды. Для меня театр — это территория, где документальный взгляд соединяется с драматургией света.",
+        cover: "https://placehold.co/1200x900/c8c3bd/1b232c?text=Театральный+репортаж",
+        images: [
+          "https://placehold.co/1600x1100/c3beb8/1b232c?text=Театр+01",
+          "https://placehold.co/1600x1100/bab5af/1b232c?text=Театр+02",
+          "https://placehold.co/1600x1100/b3aea8/1b232c?text=Театр+03",
+          "https://placehold.co/1600x1100/cec9c3/1b232c?text=Театр+04",
+          "https://placehold.co/1600x1100/bdb8b2/1b232c?text=Театр+05",
+          "https://placehold.co/1600x1100/c7c2bc/1b232c?text=Театр+06"
+        ]
+      },
       {
         id: "event-reportage",
         category: "reportage",
@@ -1336,6 +1446,38 @@
           "https://placehold.co/1600x1100/b6b1ab/1b232c?text=Событие+03",
           "https://placehold.co/1600x1100/d0cbc5/1b232c?text=Событие+04",
           "https://placehold.co/1600x1100/c5c0ba/1b232c?text=Событие+05"
+        ]
+      },
+      {
+        id: "reportage-akhmatova1",
+        category: "reportage",
+        title: "Открытие выставки Алексея Хвостенко",
+        year: "2024",
+        place: "Музей Анны Ахматовой, Санкт-Петербург",
+        short: "Репортаж с открытия экспозиции, посвященной Алексею Хвостенко — поэту, художнику и автору песен.",
+        description:
+          "Серия снята на открытии выставки в Музее Анны Ахматовой, посвященной Алексею Львовичу Хвостенко — поэту, художнику и автору песен. В этой съемке меня интересовали атмосфера музейного события, поведение зрителей, жесты, лица, свет и внутренняя пластика пространства. Черно-белое решение помогает собрать серию в более цельную и сдержанную интонацию.",
+        cover: "images/reportage-akhmatova1/cover.jpg",
+        images: [
+          "images/reportage-akhmatova1/01.jpg",
+          "images/reportage-akhmatova1/02.jpg",
+          "images/reportage-akhmatova1/03.jpg",
+          "images/reportage-akhmatova1/04.jpg",
+          "images/reportage-akhmatova1/05.jpg",
+          "images/reportage-akhmatova1/06.jpg",
+          "images/reportage-akhmatova1/07.jpg",
+          "images/reportage-akhmatova1/08.jpg",
+          "images/reportage-akhmatova1/09.jpg",
+          "images/reportage-akhmatova1/10.jpg",
+          "images/reportage-akhmatova1/11.jpg",
+          "images/reportage-akhmatova1/12.jpg",
+          "images/reportage-akhmatova1/13.jpg",
+          "images/reportage-akhmatova1/14.jpg",
+          "images/reportage-akhmatova1/15.jpg",
+          "images/reportage-akhmatova1/16.jpg",
+          "images/reportage-akhmatova1/17.jpg",
+          "images/reportage-akhmatova1/18.jpg",
+          "images/reportage-akhmatova1/19.jpg"
         ]
       },
       {
@@ -1373,24 +1515,24 @@
         ]
       },
       {
-  id: "photo-walk",
-  category: "creative",
-  title: "Дима и Вероника",
-  year: "2024",
-  place: "Литейный район, Санкт-Петербург",
-  short: "Неспешная прогулочная съемка в центре города, построенная на импровизации, атмосфере и живом маршруте.",
-  description:
-    "Простая прогулочная съемка с Димой и Вероникой в районе Литейного, в центре Санкт-Петербурга. Все складывалось свободно, без жесткого сценария и без сложной предварительной подготовки. Для этой серии важны атмосфера прогулки, естественное взаимодействие, городской свет и ощущение маршрута.",
-  cover: "images/photo-walk/cover.jpg",
-  images: [
-    "images/photo-walk/01.jpg",
-    "images/photo-walk/02.jpg",
-    "images/photo-walk/03.jpg",
-    "images/photo-walk/04.jpg",
-    "images/photo-walk/05.jpg",
-    "images/photo-walk/06.jpg"
-  ]
-},
+        id: "photo-walk",
+        category: "creative",
+        title: "Дима и Вероника",
+        year: "2024",
+        place: "Литейный район, Санкт-Петербург",
+        short: "Неспешная прогулочная съемка в центре города, построенная на импровизации, атмосфере и живом маршруте.",
+        description:
+          "Простая прогулочная съемка с Димой и Вероникой в районе Литейного, в центре Санкт-Петербурга. Все складывалось свободно, без жесткого сценария и без сложной предварительной подготовки. Для этой серии важны атмосфера прогулки, естественное взаимодействие, городской свет и ощущение маршрута.",
+        cover: "images/photo-walk/cover.jpg",
+        images: [
+          "images/photo-walk/01.jpg",
+          "images/photo-walk/02.jpg",
+          "images/photo-walk/03.jpg",
+          "images/photo-walk/04.jpg",
+          "images/photo-walk/05.jpg",
+          "images/photo-walk/06.jpg"
+        ]
+      },
       {
         id: "backstage-series",
         category: "backstage",
@@ -1459,8 +1601,10 @@
     const projectDescription = document.getElementById("projectDescription");
     const projectMainImage = document.getElementById("projectMainImage");
     const projectThumbs = document.getElementById("projectThumbs");
+    const projectImageWrap = document.getElementById("projectImageWrap");
     const prevImageButton = document.getElementById("prevImageButton");
     const nextImageButton = document.getElementById("nextImageButton");
+    const fullscreenImageButton = document.getElementById("fullscreenImageButton");
 
     const openBioButton = document.getElementById("openBioButton");
     const openBioButtonHero = document.getElementById("openBioButtonHero");
@@ -1574,6 +1718,7 @@
 
       projectDescription.textContent = project.description;
 
+      updateProjectControls();
       renderProjectThumbs();
       updateMainImage();
 
@@ -1583,11 +1728,14 @@
     }
 
     function closeProjectModal() {
+      exitCurrentFullscreen();
       projectModal.classList.remove("is-open");
       projectModal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
       currentProject = null;
       currentImageIndex = 0;
+      projectMainImage.src = "";
+      projectMainImage.alt = "";
     }
 
     function updateMainImage() {
@@ -1596,6 +1744,7 @@
       projectMainImage.src = imageSrc;
       projectMainImage.alt = `${currentProject.title} — фото ${currentImageIndex + 1}`;
       renderProjectThumbs();
+      updateProjectControls();
     }
 
     function renderProjectThumbs() {
@@ -1617,17 +1766,34 @@
 
         projectThumbs.appendChild(thumbButton);
       });
+
+      const activeThumb = projectThumbs.querySelector(".thumb.is-active");
+      if (activeThumb) {
+        activeThumb.scrollIntoView({
+          block: "nearest",
+          inline: "nearest"
+        });
+      }
+    }
+
+    function updateProjectControls() {
+      const hasProject = Boolean(currentProject);
+      const hasMultipleImages = hasProject && currentProject.images.length > 1;
+
+      prevImageButton.disabled = !hasMultipleImages;
+      nextImageButton.disabled = !hasMultipleImages;
+      fullscreenImageButton.disabled = !hasProject;
     }
 
     function showPrevImage() {
-      if (!currentProject) return;
+      if (!currentProject || currentProject.images.length < 2) return;
       currentImageIndex =
         (currentImageIndex - 1 + currentProject.images.length) % currentProject.images.length;
       updateMainImage();
     }
 
     function showNextImage() {
-      if (!currentProject) return;
+      if (!currentProject || currentProject.images.length < 2) return;
       currentImageIndex = (currentImageIndex + 1) % currentProject.images.length;
       updateMainImage();
     }
@@ -1644,6 +1810,65 @@
       document.body.style.overflow = "";
     }
 
+    function getCurrentFullscreenElement() {
+      return document.fullscreenElement || document.webkitFullscreenElement || null;
+    }
+
+    function requestElementFullscreen(element) {
+      if (!element) return Promise.resolve();
+
+      if (element.requestFullscreen) {
+        return element.requestFullscreen();
+      }
+
+      if (element.webkitRequestFullscreen) {
+        return element.webkitRequestFullscreen();
+      }
+
+      return Promise.resolve();
+    }
+
+    function exitCurrentFullscreen() {
+      const activeElement = getCurrentFullscreenElement();
+      if (!activeElement) return Promise.resolve();
+
+      if (document.exitFullscreen) {
+        return document.exitFullscreen();
+      }
+
+      if (document.webkitExitFullscreen) {
+        return document.webkitExitFullscreen();
+      }
+
+      return Promise.resolve();
+    }
+
+    function updateFullscreenButtonState() {
+      const isFullscreen = getCurrentFullscreenElement() === projectImageWrap;
+
+      fullscreenImageButton.textContent = isFullscreen ? "⤡" : "⤢";
+      fullscreenImageButton.setAttribute(
+        "aria-label",
+        isFullscreen ? "Выйти из полноэкранного режима" : "Открыть фото на весь экран"
+      );
+    }
+
+    async function toggleImageFullscreen() {
+      if (!currentProject) return;
+
+      const isFullscreen = getCurrentFullscreenElement() === projectImageWrap;
+
+      try {
+        if (isFullscreen) {
+          await exitCurrentFullscreen();
+        } else {
+          await requestElementFullscreen(projectImageWrap);
+        }
+      } catch (error) {
+        console.error("Не удалось переключить полноэкранный режим:", error);
+      }
+    }
+
     document.querySelectorAll("[data-close-project]").forEach((element) => {
       element.addEventListener("click", closeProjectModal);
     });
@@ -1654,12 +1879,23 @@
 
     prevImageButton.addEventListener("click", showPrevImage);
     nextImageButton.addEventListener("click", showNextImage);
+    fullscreenImageButton.addEventListener("click", toggleImageFullscreen);
+
+    projectMainImage.addEventListener("dblclick", toggleImageFullscreen);
 
     openBioButton.addEventListener("click", openBioModal);
     openBioButtonHero.addEventListener("click", openBioModal);
 
+    document.addEventListener("fullscreenchange", updateFullscreenButtonState);
+    document.addEventListener("webkitfullscreenchange", updateFullscreenButtonState);
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
+        if (getCurrentFullscreenElement() === projectImageWrap) {
+          exitCurrentFullscreen();
+          return;
+        }
+
         if (projectModal.classList.contains("is-open")) closeProjectModal();
         if (bioModal.classList.contains("is-open")) closeBioModal();
       }
@@ -1667,9 +1903,15 @@
       if (projectModal.classList.contains("is-open")) {
         if (event.key === "ArrowLeft") showPrevImage();
         if (event.key === "ArrowRight") showNextImage();
+
+        if (event.key.toLowerCase() === "f") {
+          toggleImageFullscreen();
+        }
       }
     });
 
+    updateProjectControls();
+    updateFullscreenButtonState();
     renderFilters();
     renderPortfolio();
   </script>
