@@ -736,6 +736,19 @@
       background: rgba(255, 255, 255, 0.70);
     }
 
+    .project-modal__header-description {
+      appearance: none;
+      display: none;
+      margin-top: 12px;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(27, 35, 44, 0.12);
+      background: rgba(255, 255, 255, 0.30);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
     .project-modal__body {
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(460px, 0.92fr);
@@ -786,8 +799,8 @@
       width: 42px;
       height: 42px;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(18, 28, 40, 0.30);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(18, 28, 40, 0.24);
       color: var(--white);
       cursor: pointer;
       display: none;
@@ -884,32 +897,6 @@
       margin-bottom: 16px;
     }
 
-    .project-modal__description-toggle {
-      display: none;
-      width: 100%;
-      appearance: none;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.22);
-      color: var(--ink);
-      min-height: 46px;
-      border-radius: 14px;
-      padding: 0 14px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      cursor: pointer;
-    }
-
-    .project-modal__description-toggle-icon {
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .project-modal__description-body {
-      display: block;
-    }
-
     .project-modal__description {
       margin: 0;
       color: var(--ink-soft);
@@ -927,18 +914,21 @@
     }
 
     .project-modal__thumbs-wrap::-webkit-scrollbar,
-    .project-modal__content::-webkit-scrollbar {
+    .project-modal__content::-webkit-scrollbar,
+    .project-description-overlay__body::-webkit-scrollbar {
       width: 10px;
       height: 10px;
     }
 
     .project-modal__thumbs-wrap::-webkit-scrollbar-track,
-    .project-modal__content::-webkit-scrollbar-track {
+    .project-modal__content::-webkit-scrollbar-track,
+    .project-description-overlay__body::-webkit-scrollbar-track {
       background: transparent;
     }
 
     .project-modal__thumbs-wrap::-webkit-scrollbar-thumb,
-    .project-modal__content::-webkit-scrollbar-thumb {
+    .project-modal__content::-webkit-scrollbar-thumb,
+    .project-description-overlay__body::-webkit-scrollbar-thumb {
       background: rgba(27, 35, 44, 0.20);
       border-radius: 999px;
       border: 2px solid transparent;
@@ -987,6 +977,79 @@
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    .project-description-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      display: none;
+    }
+
+    .project-description-overlay.is-open {
+      display: block;
+    }
+
+    .project-description-overlay__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 18, 22, 0.30);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .project-description-overlay__panel {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 14px;
+      bottom: 14px;
+      background: rgba(228, 228, 228, 0.96);
+      border: 1px solid rgba(27, 35, 44, 0.12);
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(8, 14, 20, 0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .project-description-overlay__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(27, 35, 44, 0.08);
+      flex-shrink: 0;
+    }
+
+    .project-description-overlay__title {
+      font-size: 20px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 650;
+      color: var(--ink);
+    }
+
+    .project-description-overlay__close {
+      appearance: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(27, 35, 44, 0.12);
+      background: rgba(255, 255, 255, 0.34);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .project-description-overlay__body {
+      padding: 18px;
+      overflow: auto;
+      color: var(--ink-soft);
+      font-size: 16px;
+      line-height: 1.72;
     }
 
     .bio-modal__body {
@@ -1232,6 +1295,12 @@
       grid-template-columns: 1fr;
     }
 
+    .modal__dialog--project.is-mobile-layout .project-modal__header-description {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .modal__dialog--project.is-mobile-layout .project-modal__viewer {
       border-right: 0;
       border-bottom: 1px solid var(--line);
@@ -1246,32 +1315,59 @@
 
     .modal__dialog--project.is-mobile-layout .project-modal__toolbar {
       position: absolute;
-      left: 20px;
-      right: 20px;
+      left: 18px;
+      right: 18px;
       bottom: 18px;
       z-index: 7;
       min-height: 0;
-      padding: 8px 10px;
-      background: rgba(18, 28, 40, 0.24);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      pointer-events: none;
+      box-shadow: none;
     }
 
     .modal__dialog--project.is-mobile-layout .project-modal__counter {
-      color: rgba(255, 255, 255, 0.94);
-      padding-left: 2px;
+      color: rgba(255, 255, 255, 0.96);
+      padding-left: 0;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.90),
+        0 0 12px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__toolbar-actions {
+      gap: 10px;
+      pointer-events: auto;
     }
 
     .modal__dialog--project.is-mobile-layout .project-modal__toolbar-actions button {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.18);
-      color: var(--white);
+      width: 46px;
+      height: 46px;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      color: rgba(255, 255, 255, 0.98);
+      box-shadow: none;
+      text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.95),
+        0 0 12px rgba(0, 0, 0, 0.45);
+      font-size: 30px;
+      line-height: 1;
+      padding: 0;
     }
 
     .modal__dialog--project.is-mobile-layout .project-modal__toolbar-actions button:hover {
-      background: rgba(255, 255, 255, 0.24);
-      border-color: rgba(255, 255, 255, 0.22);
+      transform: none;
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__toolbar-actions button:disabled {
+      opacity: 0.5;
     }
 
     .modal__dialog--project.is-mobile-layout .project-modal__aside {
@@ -1318,35 +1414,23 @@
     .modal__dialog--project.is-mobile-layout .project-modal__content {
       order: 2;
       max-height: none;
-      padding: 16px;
+      padding: 14px 16px 16px;
       overflow: visible;
     }
 
     .modal__dialog--project.is-mobile-layout .project-modal__meta {
-      margin-bottom: 12px;
-    }
-
-    .modal__dialog--project.is-mobile-layout .project-modal__description-toggle {
-      display: flex;
-    }
-
-    .modal__dialog--project.is-mobile-layout .project-modal__description-body {
-      display: none;
-      padding-top: 14px;
-    }
-
-    .modal__dialog--project.is-mobile-layout .project-modal__content.is-expanded .project-modal__description-body {
-      display: block;
+      margin-bottom: 0;
     }
 
     .modal__dialog--project.is-mobile-layout .project-modal__description {
-      font-size: 15px;
-      line-height: 1.65;
+      display: none;
     }
 
     .modal__dialog--project.is-mobile-layout .modal__sub {
       margin-top: 8px;
       max-width: 100%;
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .modal__dialog--project.is-mobile-layout .modal__title {
@@ -1615,6 +1699,7 @@
           <div class="modal__eyebrow" id="projectModalEyebrow">Серия</div>
           <h2 class="modal__title" id="projectModalTitle">Название проекта</h2>
           <p class="modal__sub" id="projectModalSub">Краткая строка с описанием</p>
+          <button class="project-modal__header-description" id="projectHeaderDescriptionButton" type="button">Описание</button>
         </div>
         <button class="modal__close" type="button" aria-label="Закрыть" data-close-project>×</button>
       </div>
@@ -1626,7 +1711,7 @@
             <button class="project-modal__viewer-close" type="button" aria-label="Закрыть" data-close-project>×</button>
           </div>
 
-          <div class="project-modal__toolbar" id="projectToolbar">
+          <div class="project-modal__toolbar">
             <div class="project-modal__counter" id="projectImageCounter">1 / 1</div>
 
             <div class="project-modal__toolbar-actions">
@@ -1638,23 +1723,26 @@
         </div>
 
         <div class="project-modal__aside">
-          <div class="project-modal__content" id="projectContent">
+          <div class="project-modal__content">
             <div class="project-modal__meta" id="projectMeta"></div>
-
-            <button class="project-modal__description-toggle" id="projectDescriptionToggle" type="button" aria-expanded="false">
-              <span>Описание</span>
-              <span class="project-modal__description-toggle-icon" id="projectDescriptionToggleIcon">+</span>
-            </button>
-
-            <div class="project-modal__description-body" id="projectDescriptionBody">
-              <p class="project-modal__description" id="projectDescription"></p>
-            </div>
+            <p class="project-modal__description" id="projectDescription"></p>
           </div>
 
           <div class="project-modal__thumbs-wrap">
             <div class="project-modal__thumbs-label">Фотографии серии</div>
             <div class="project-modal__thumbs" id="projectThumbs"></div>
           </div>
+        </div>
+      </div>
+
+      <div class="project-description-overlay" id="projectDescriptionOverlay" aria-hidden="true">
+        <div class="project-description-overlay__backdrop" id="projectDescriptionOverlayBackdrop"></div>
+        <div class="project-description-overlay__panel">
+          <div class="project-description-overlay__header">
+            <div class="project-description-overlay__title">Описание</div>
+            <button class="project-description-overlay__close" id="closeProjectDescriptionButton" type="button" aria-label="Закрыть">×</button>
+          </div>
+          <div class="project-description-overlay__body" id="projectDescriptionOverlayBody"></div>
         </div>
       </div>
     </div>
@@ -1862,9 +1950,6 @@
     const projectModalSub = document.getElementById("projectModalSub");
     const projectMeta = document.getElementById("projectMeta");
     const projectDescription = document.getElementById("projectDescription");
-    const projectDescriptionToggle = document.getElementById("projectDescriptionToggle");
-    const projectDescriptionToggleIcon = document.getElementById("projectDescriptionToggleIcon");
-    const projectContent = document.getElementById("projectContent");
     const projectMainImage = document.getElementById("projectMainImage");
     const projectThumbs = document.getElementById("projectThumbs");
     const projectViewer = document.getElementById("projectViewer");
@@ -1873,6 +1958,12 @@
     const prevImageButton = document.getElementById("prevImageButton");
     const nextImageButton = document.getElementById("nextImageButton");
     const fullscreenImageButton = document.getElementById("fullscreenImageButton");
+    const projectHeaderDescriptionButton = document.getElementById("projectHeaderDescriptionButton");
+
+    const projectDescriptionOverlay = document.getElementById("projectDescriptionOverlay");
+    const projectDescriptionOverlayBackdrop = document.getElementById("projectDescriptionOverlayBackdrop");
+    const projectDescriptionOverlayBody = document.getElementById("projectDescriptionOverlayBody");
+    const closeProjectDescriptionButton = document.getElementById("closeProjectDescriptionButton");
 
     const openBioButton = document.getElementById("openBioButton");
     const openBioButtonHero = document.getElementById("openBioButtonHero");
@@ -1881,7 +1972,7 @@
     let currentProject = null;
     let currentImageIndex = 0;
     let isMobileFocusMode = false;
-    let isDescriptionExpanded = false;
+    let isDescriptionOverlayOpen = false;
     let thumbButtons = [];
     let touchStartX = 0;
     let touchStartY = 0;
@@ -1983,6 +2074,12 @@
       });
     }
 
+    function setModalBodyLock() {
+      const hasOpenModal =
+        projectModal.classList.contains("is-open") || bioModal.classList.contains("is-open");
+      document.body.classList.toggle("modal-open", hasOpenModal);
+    }
+
     function isMobileViewport() {
       return window.innerWidth <= 900;
     }
@@ -2002,7 +2099,7 @@
       currentProject = project;
       currentImageIndex = 0;
       isMobileFocusMode = false;
-      isDescriptionExpanded = !isMobileViewport();
+      isDescriptionOverlayOpen = false;
 
       projectModalEyebrow.textContent = categoryLabels[project.category];
       projectModalTitle.textContent = project.title;
@@ -2015,6 +2112,7 @@
       `;
 
       projectDescription.textContent = project.description;
+      projectDescriptionOverlayBody.textContent = project.description;
 
       buildProjectThumbs();
       syncProjectResponsiveState();
@@ -2022,22 +2120,23 @@
 
       projectModal.classList.add("is-open");
       projectModal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
+      setModalBodyLock();
     }
 
     function closeProjectModal() {
+      closeProjectDescriptionOverlay();
+
       if (!isMobileViewport()) {
         exitCurrentFullscreen();
       }
 
       projectModal.classList.remove("is-open");
       projectModal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
 
       currentProject = null;
       currentImageIndex = 0;
       isMobileFocusMode = false;
-      isDescriptionExpanded = false;
+      isDescriptionOverlayOpen = false;
       thumbButtons = [];
 
       projectMainImage.src = "";
@@ -2046,6 +2145,7 @@
       projectThumbs.innerHTML = "";
 
       projectDialog.classList.remove("is-mobile-layout", "is-mobile-focus", "is-mobile-landscape");
+      setModalBodyLock();
     }
 
     function buildProjectThumbs() {
@@ -2104,16 +2204,13 @@
 
       prevImageButton.disabled = !hasMultipleImages;
       nextImageButton.disabled = !hasMultipleImages;
-
       updateFullscreenButtonState();
+      updateDescriptionButtonState();
     }
 
-    function updateDescriptionState() {
-      const collapsible = isMobileViewport() && !isMobileLandscape() && !isMobileFocusMode;
-
-      projectContent.classList.toggle("is-expanded", !collapsible || isDescriptionExpanded);
-      projectDescriptionToggle.setAttribute("aria-expanded", String(!collapsible || isDescriptionExpanded));
-      projectDescriptionToggleIcon.textContent = !collapsible || isDescriptionExpanded ? "−" : "+";
+    function updateDescriptionButtonState() {
+      const showButton = currentProject && isMobilePortrait() && !isMobileFocusMode;
+      projectHeaderDescriptionButton.hidden = !showButton;
     }
 
     function syncProjectResponsiveState() {
@@ -2122,19 +2219,21 @@
 
       if (!mobile) {
         isMobileFocusMode = false;
-        isDescriptionExpanded = true;
       }
 
       if (landscape) {
         isMobileFocusMode = true;
-        isDescriptionExpanded = false;
+        closeProjectDescriptionOverlay();
+      }
+
+      if (!mobile) {
+        closeProjectDescriptionOverlay();
       }
 
       projectDialog.classList.toggle("is-mobile-layout", mobile);
       projectDialog.classList.toggle("is-mobile-focus", mobile && isMobileFocusMode);
       projectDialog.classList.toggle("is-mobile-landscape", mobile && landscape);
 
-      updateDescriptionState();
       updateProjectControls();
       updateThumbsActiveState();
     }
@@ -2155,13 +2254,13 @@
     function openBioModal() {
       bioModal.classList.add("is-open");
       bioModal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
+      setModalBodyLock();
     }
 
     function closeBioModal() {
       bioModal.classList.remove("is-open");
       bioModal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
+      setModalBodyLock();
     }
 
     function getCurrentFullscreenElement() {
@@ -2229,10 +2328,8 @@
 
       if (isMobileViewport()) {
         if (isMobileLandscape()) return;
+        closeProjectDescriptionOverlay();
         isMobileFocusMode = !isMobileFocusMode;
-        if (isMobileFocusMode) {
-          isDescriptionExpanded = false;
-        }
         syncProjectResponsiveState();
         return;
       }
@@ -2250,14 +2347,23 @@
       }
     }
 
-    function handleDescriptionToggle() {
-      if (!isMobileViewport() || isMobileLandscape() || isMobileFocusMode) return;
-      isDescriptionExpanded = !isDescriptionExpanded;
-      updateDescriptionState();
+    function openProjectDescriptionOverlay() {
+      if (!currentProject || !isMobilePortrait()) return;
+
+      projectDescriptionOverlay.classList.add("is-open");
+      projectDescriptionOverlay.setAttribute("aria-hidden", "false");
+      isDescriptionOverlayOpen = true;
+    }
+
+    function closeProjectDescriptionOverlay() {
+      projectDescriptionOverlay.classList.remove("is-open");
+      projectDescriptionOverlay.setAttribute("aria-hidden", "true");
+      isDescriptionOverlayOpen = false;
     }
 
     function onImageTouchStart(event) {
       if (!currentProject || currentProject.images.length < 2) return;
+      if (isDescriptionOverlayOpen) return;
       if (event.touches.length !== 1) return;
 
       touchStartX = event.touches[0].clientX;
@@ -2266,6 +2372,7 @@
 
     function onImageTouchEnd(event) {
       if (!currentProject || currentProject.images.length < 2) return;
+      if (isDescriptionOverlayOpen) return;
       if (!touchStartX && !touchStartY) return;
 
       const touch = event.changedTouches[0];
@@ -2296,7 +2403,10 @@
     prevImageButton.addEventListener("click", showPrevImage);
     nextImageButton.addEventListener("click", showNextImage);
     fullscreenImageButton.addEventListener("click", toggleImageFullscreen);
-    projectDescriptionToggle.addEventListener("click", handleDescriptionToggle);
+
+    projectHeaderDescriptionButton.addEventListener("click", openProjectDescriptionOverlay);
+    closeProjectDescriptionButton.addEventListener("click", closeProjectDescriptionOverlay);
+    projectDescriptionOverlayBackdrop.addEventListener("click", closeProjectDescriptionOverlay);
 
     projectImageWrap.addEventListener("touchstart", onImageTouchStart, { passive: true });
     projectImageWrap.addEventListener("touchend", onImageTouchEnd, { passive: true });
@@ -2329,6 +2439,11 @@
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
+        if (isDescriptionOverlayOpen) {
+          closeProjectDescriptionOverlay();
+          return;
+        }
+
         if (!isMobileViewport() && getCurrentFullscreenElement() === projectViewer) {
           exitCurrentFullscreen();
           return;
@@ -2338,7 +2453,7 @@
         if (bioModal.classList.contains("is-open")) closeBioModal();
       }
 
-      if (projectModal.classList.contains("is-open")) {
+      if (projectModal.classList.contains("is-open") && !isDescriptionOverlayOpen) {
         if (event.key === "ArrowLeft") showPrevImage();
         if (event.key === "ArrowRight") showNextImage();
 
