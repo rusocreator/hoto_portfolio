@@ -73,6 +73,10 @@
       text-rendering: optimizeLegibility;
     }
 
+    body.modal-open {
+      overflow: hidden;
+    }
+
     ::selection {
       background: rgba(75, 87, 99, 0.16);
       color: var(--ink);
@@ -740,6 +744,7 @@
     }
 
     .project-modal__viewer {
+      position: relative;
       padding: 20px;
       border-right: 1px solid var(--line);
       background: var(--viewer-bg);
@@ -759,6 +764,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      touch-action: pan-y;
     }
 
     .project-modal__image {
@@ -769,6 +775,27 @@
       cursor: zoom-in;
       user-select: none;
       -webkit-user-drag: none;
+    }
+
+    .project-modal__viewer-close {
+      appearance: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 8;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(18, 28, 40, 0.30);
+      color: var(--white);
+      cursor: pointer;
+      display: none;
+      place-items: center;
+      font-size: 22px;
+      line-height: 1;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .project-modal__toolbar {
@@ -855,6 +882,32 @@
       letter-spacing: 0.10em;
       text-transform: uppercase;
       margin-bottom: 16px;
+    }
+
+    .project-modal__description-toggle {
+      display: none;
+      width: 100%;
+      appearance: none;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.22);
+      color: var(--ink);
+      min-height: 46px;
+      border-radius: 14px;
+      padding: 0 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .project-modal__description-toggle-icon {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .project-modal__description-body {
+      display: block;
     }
 
     .project-modal__description {
@@ -1139,12 +1192,10 @@
 
       .project-modal__viewer {
         padding: 12px;
-        min-height: 38vh;
       }
 
       .project-modal__content {
-        padding: 18px 18px 14px;
-        max-height: 220px;
+        padding: 18px;
       }
 
       .project-modal__thumbs-wrap {
@@ -1167,6 +1218,224 @@
       .modal__title {
         font-size: 24px;
       }
+    }
+
+    .modal__dialog--project.is-mobile-layout {
+      width: min(1280px, calc(100% - 12px));
+      max-height: calc(100vh - 12px);
+      margin: 6px auto;
+      border-radius: 20px;
+      height: calc(100vh - 12px);
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__body {
+      grid-template-columns: 1fr;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__viewer {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+      min-height: 42vh;
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__image-wrap {
+      border-radius: 18px;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__toolbar {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      z-index: 7;
+      min-height: 0;
+      padding: 8px 10px;
+      background: rgba(18, 28, 40, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__counter {
+      color: rgba(255, 255, 255, 0.94);
+      padding-left: 2px;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__toolbar-actions button {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: var(--white);
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__toolbar-actions button:hover {
+      background: rgba(255, 255, 255, 0.24);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__aside {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__thumbs-wrap {
+      order: 1;
+      border-top: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 16px 14px;
+      overflow: hidden;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__thumbs-label {
+      display: none;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__thumbs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 2px 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      touch-action: pan-x;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__thumbs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .modal__dialog--project.is-mobile-layout .thumb {
+      flex: 0 0 82px;
+      width: 82px;
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      scroll-snap-align: start;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__content {
+      order: 2;
+      max-height: none;
+      padding: 16px;
+      overflow: visible;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__meta {
+      margin-bottom: 12px;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__description-toggle {
+      display: flex;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__description-body {
+      display: none;
+      padding-top: 14px;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__content.is-expanded .project-modal__description-body {
+      display: block;
+    }
+
+    .modal__dialog--project.is-mobile-layout .project-modal__description {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .modal__dialog--project.is-mobile-layout .modal__sub {
+      margin-top: 8px;
+      max-width: 100%;
+    }
+
+    .modal__dialog--project.is-mobile-layout .modal__title {
+      font-size: 22px;
+    }
+
+    .modal__dialog--project.is-mobile-layout .modal__close {
+      width: 40px;
+      height: 40px;
+    }
+
+    .modal__dialog--project.is-mobile-focus .modal__header,
+    .modal__dialog--project.is-mobile-landscape .modal__header {
+      display: none;
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__aside,
+    .modal__dialog--project.is-mobile-landscape .project-modal__aside {
+      display: none;
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__body,
+    .modal__dialog--project.is-mobile-landscape .project-modal__body {
+      grid-template-columns: 1fr;
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__viewer,
+    .modal__dialog--project.is-mobile-landscape .project-modal__viewer {
+      border-bottom: 0;
+      min-height: 100%;
+      height: 100%;
+      padding: 8px;
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__image-wrap,
+    .modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
+      min-height: 100%;
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__viewer-close,
+    .modal__dialog--project.is-mobile-landscape .project-modal__viewer-close {
+      display: grid;
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__toolbar,
+    .modal__dialog--project.is-mobile-landscape .project-modal__toolbar {
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+    }
+
+    .modal__dialog--project.is-mobile-landscape {
+      width: 100vw;
+      max-width: none;
+      height: 100vh;
+      max-height: none;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
+    }
+
+    .modal__dialog--project.is-mobile-landscape .project-modal__viewer {
+      padding: 0;
+      background: #8f8f8f;
+    }
+
+    .modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
+      border: 0;
+      border-radius: 0;
+      background: #8f8f8f;
+    }
+
+    .modal__dialog--project.is-mobile-landscape .project-modal__image {
+      background: #8f8f8f;
+    }
+
+    .modal__dialog--project.is-mobile-landscape .project-modal__toolbar {
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+    }
+
+    .modal__dialog--project.is-mobile-landscape .project-modal__viewer-close {
+      top: 10px;
+      right: 10px;
+    }
+
+    .modal__dialog--project.is-mobile-landscape #fullscreenImageButton {
+      display: none !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1340,7 +1609,7 @@
   <div class="modal" id="projectModal" aria-hidden="true">
     <div class="modal__backdrop" data-close-project></div>
 
-    <div class="modal__dialog modal__dialog--project" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="modal__dialog modal__dialog--project" id="projectDialog" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
       <div class="modal__header">
         <div class="modal__title-wrap">
           <div class="modal__eyebrow" id="projectModalEyebrow">Серия</div>
@@ -1352,11 +1621,12 @@
 
       <div class="project-modal__body">
         <div class="project-modal__viewer" id="projectViewer">
-          <div class="project-modal__image-wrap">
+          <div class="project-modal__image-wrap" id="projectImageWrap">
             <img class="project-modal__image" id="projectMainImage" src="" alt="" />
+            <button class="project-modal__viewer-close" type="button" aria-label="Закрыть" data-close-project>×</button>
           </div>
 
-          <div class="project-modal__toolbar">
+          <div class="project-modal__toolbar" id="projectToolbar">
             <div class="project-modal__counter" id="projectImageCounter">1 / 1</div>
 
             <div class="project-modal__toolbar-actions">
@@ -1368,9 +1638,17 @@
         </div>
 
         <div class="project-modal__aside">
-          <div class="project-modal__content">
+          <div class="project-modal__content" id="projectContent">
             <div class="project-modal__meta" id="projectMeta"></div>
-            <p class="project-modal__description" id="projectDescription"></p>
+
+            <button class="project-modal__description-toggle" id="projectDescriptionToggle" type="button" aria-expanded="false">
+              <span>Описание</span>
+              <span class="project-modal__description-toggle-icon" id="projectDescriptionToggleIcon">+</span>
+            </button>
+
+            <div class="project-modal__description-body" id="projectDescriptionBody">
+              <p class="project-modal__description" id="projectDescription"></p>
+            </div>
           </div>
 
           <div class="project-modal__thumbs-wrap">
@@ -1535,8 +1813,8 @@
         year: "2025",
         place: "Студия",
         short: "Черно-белая студийная серия с актрисой Светланой Смирновой-Марцинкевич, снятая в студии VERETENO.",
-description:
-  "В работе отталкивались от брифа и заранее собранных референсов, пробовали разные схемы студийного света и несколько визуальных состояний внутри одной съемки. В проекте работала команда: стиль — Евгения Поморянская, мейк — Алина.",
+        description:
+          "В работе отталкивались от брифа и заранее собранных референсов, пробовали разные схемы студийного света и несколько визуальных состояний внутри одной съемки. В проекте работала команда: стиль — Евгения Поморянская, мейк — Алина.",
         cover: "images/studiynaya-photoset-vereteno/cover.jpg",
         images: [
           "images/studiynaya-photoset-vereteno/01.jpg",
@@ -1576,6 +1854,7 @@ description:
     const portfolioGrid = document.getElementById("portfolioGrid");
 
     const projectModal = document.getElementById("projectModal");
+    const projectDialog = document.getElementById("projectDialog");
     const bioModal = document.getElementById("bioModal");
 
     const projectModalEyebrow = document.getElementById("projectModalEyebrow");
@@ -1583,9 +1862,13 @@ description:
     const projectModalSub = document.getElementById("projectModalSub");
     const projectMeta = document.getElementById("projectMeta");
     const projectDescription = document.getElementById("projectDescription");
+    const projectDescriptionToggle = document.getElementById("projectDescriptionToggle");
+    const projectDescriptionToggleIcon = document.getElementById("projectDescriptionToggleIcon");
+    const projectContent = document.getElementById("projectContent");
     const projectMainImage = document.getElementById("projectMainImage");
     const projectThumbs = document.getElementById("projectThumbs");
     const projectViewer = document.getElementById("projectViewer");
+    const projectImageWrap = document.getElementById("projectImageWrap");
     const projectImageCounter = document.getElementById("projectImageCounter");
     const prevImageButton = document.getElementById("prevImageButton");
     const nextImageButton = document.getElementById("nextImageButton");
@@ -1597,6 +1880,11 @@ description:
     let currentFilter = "all";
     let currentProject = null;
     let currentImageIndex = 0;
+    let isMobileFocusMode = false;
+    let isDescriptionExpanded = false;
+    let thumbButtons = [];
+    let touchStartX = 0;
+    let touchStartY = 0;
 
     function countByCategory(category) {
       if (category === "all") return portfolioData.length;
@@ -1695,12 +1983,26 @@ description:
       });
     }
 
+    function isMobileViewport() {
+      return window.innerWidth <= 900;
+    }
+
+    function isMobileLandscape() {
+      return isMobileViewport() && window.innerWidth > window.innerHeight;
+    }
+
+    function isMobilePortrait() {
+      return isMobileViewport() && window.innerHeight >= window.innerWidth;
+    }
+
     function openProjectModal(projectId) {
       const project = portfolioData.find((item) => item.id === projectId);
       if (!project) return;
 
       currentProject = project;
       currentImageIndex = 0;
+      isMobileFocusMode = false;
+      isDescriptionExpanded = !isMobileViewport();
 
       projectModalEyebrow.textContent = categoryLabels[project.category];
       projectModalTitle.textContent = project.title;
@@ -1714,47 +2016,47 @@ description:
 
       projectDescription.textContent = project.description;
 
-      updateProjectControls();
-      renderProjectThumbs();
+      buildProjectThumbs();
+      syncProjectResponsiveState();
       updateMainImage();
 
       projectModal.classList.add("is-open");
       projectModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     }
 
     function closeProjectModal() {
-      exitCurrentFullscreen();
+      if (!isMobileViewport()) {
+        exitCurrentFullscreen();
+      }
+
       projectModal.classList.remove("is-open");
       projectModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
+
       currentProject = null;
       currentImageIndex = 0;
+      isMobileFocusMode = false;
+      isDescriptionExpanded = false;
+      thumbButtons = [];
+
       projectMainImage.src = "";
       projectMainImage.alt = "";
       projectImageCounter.textContent = "1 / 1";
-    }
-
-    function updateMainImage() {
-      if (!currentProject || !currentProject.images.length) return;
-      const imageSrc = currentProject.images[currentImageIndex];
-      projectMainImage.src = imageSrc;
-      projectMainImage.alt = `${currentProject.title} — фото ${currentImageIndex + 1}`;
-      projectImageCounter.textContent = `${currentImageIndex + 1} / ${currentProject.images.length}`;
-      renderProjectThumbs();
-      updateProjectControls();
-    }
-
-    function renderProjectThumbs() {
-      if (!currentProject) return;
       projectThumbs.innerHTML = "";
 
-      currentProject.images.forEach((src, index) => {
+      projectDialog.classList.remove("is-mobile-layout", "is-mobile-focus", "is-mobile-landscape");
+    }
+
+    function buildProjectThumbs() {
+      if (!currentProject) return;
+
+      projectThumbs.innerHTML = "";
+      thumbButtons = currentProject.images.map((src, index) => {
         const thumbButton = document.createElement("button");
         thumbButton.type = "button";
-        thumbButton.className = "thumb" + (index === currentImageIndex ? " is-active" : "");
+        thumbButton.className = "thumb";
         thumbButton.setAttribute("aria-label", `Открыть фото ${index + 1}`);
-
         thumbButton.innerHTML = `<img src="${src}" alt="${currentProject.title} — миниатюра ${index + 1}" loading="lazy" />`;
 
         thumbButton.addEventListener("click", () => {
@@ -1763,15 +2065,37 @@ description:
         });
 
         projectThumbs.appendChild(thumbButton);
+        return thumbButton;
+      });
+    }
+
+    function updateThumbsActiveState() {
+      if (!thumbButtons.length) return;
+
+      thumbButtons.forEach((button, index) => {
+        button.classList.toggle("is-active", index === currentImageIndex);
       });
 
-      const activeThumb = projectThumbs.querySelector(".thumb.is-active");
+      const activeThumb = thumbButtons[currentImageIndex];
       if (activeThumb) {
         activeThumb.scrollIntoView({
           block: "nearest",
-          inline: "nearest"
+          inline: isMobileViewport() ? "center" : "nearest",
+          behavior: "smooth"
         });
       }
+    }
+
+    function updateMainImage() {
+      if (!currentProject || !currentProject.images.length) return;
+
+      const imageSrc = currentProject.images[currentImageIndex];
+      projectMainImage.src = imageSrc;
+      projectMainImage.alt = `${currentProject.title} — фото ${currentImageIndex + 1}`;
+      projectImageCounter.textContent = `${currentImageIndex + 1} / ${currentProject.images.length}`;
+
+      updateThumbsActiveState();
+      updateProjectControls();
     }
 
     function updateProjectControls() {
@@ -1780,7 +2104,39 @@ description:
 
       prevImageButton.disabled = !hasMultipleImages;
       nextImageButton.disabled = !hasMultipleImages;
-      fullscreenImageButton.disabled = !hasProject;
+
+      updateFullscreenButtonState();
+    }
+
+    function updateDescriptionState() {
+      const collapsible = isMobileViewport() && !isMobileLandscape() && !isMobileFocusMode;
+
+      projectContent.classList.toggle("is-expanded", !collapsible || isDescriptionExpanded);
+      projectDescriptionToggle.setAttribute("aria-expanded", String(!collapsible || isDescriptionExpanded));
+      projectDescriptionToggleIcon.textContent = !collapsible || isDescriptionExpanded ? "−" : "+";
+    }
+
+    function syncProjectResponsiveState() {
+      const mobile = isMobileViewport();
+      const landscape = isMobileLandscape();
+
+      if (!mobile) {
+        isMobileFocusMode = false;
+        isDescriptionExpanded = true;
+      }
+
+      if (landscape) {
+        isMobileFocusMode = true;
+        isDescriptionExpanded = false;
+      }
+
+      projectDialog.classList.toggle("is-mobile-layout", mobile);
+      projectDialog.classList.toggle("is-mobile-focus", mobile && isMobileFocusMode);
+      projectDialog.classList.toggle("is-mobile-landscape", mobile && landscape);
+
+      updateDescriptionState();
+      updateProjectControls();
+      updateThumbsActiveState();
     }
 
     function showPrevImage() {
@@ -1799,13 +2155,13 @@ description:
     function openBioModal() {
       bioModal.classList.add("is-open");
       bioModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     }
 
     function closeBioModal() {
       bioModal.classList.remove("is-open");
       bioModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
     }
 
     function getCurrentFullscreenElement() {
@@ -1842,8 +2198,25 @@ description:
     }
 
     function updateFullscreenButtonState() {
-      const isFullscreen = getCurrentFullscreenElement() === projectViewer;
+      if (!currentProject) {
+        fullscreenImageButton.disabled = true;
+        return;
+      }
 
+      fullscreenImageButton.disabled = false;
+
+      if (isMobileViewport()) {
+        fullscreenImageButton.hidden = isMobileLandscape();
+        fullscreenImageButton.textContent = isMobileFocusMode ? "⤡" : "⤢";
+        fullscreenImageButton.setAttribute(
+          "aria-label",
+          isMobileFocusMode ? "Показать миниатюры и описание" : "Скрыть миниатюры и описание"
+        );
+        return;
+      }
+
+      fullscreenImageButton.hidden = false;
+      const isFullscreen = getCurrentFullscreenElement() === projectViewer;
       fullscreenImageButton.textContent = isFullscreen ? "⤡" : "⤢";
       fullscreenImageButton.setAttribute(
         "aria-label",
@@ -1853,6 +2226,16 @@ description:
 
     async function toggleImageFullscreen() {
       if (!currentProject) return;
+
+      if (isMobileViewport()) {
+        if (isMobileLandscape()) return;
+        isMobileFocusMode = !isMobileFocusMode;
+        if (isMobileFocusMode) {
+          isDescriptionExpanded = false;
+        }
+        syncProjectResponsiveState();
+        return;
+      }
 
       const isFullscreen = getCurrentFullscreenElement() === projectViewer;
 
@@ -1867,6 +2250,41 @@ description:
       }
     }
 
+    function handleDescriptionToggle() {
+      if (!isMobileViewport() || isMobileLandscape() || isMobileFocusMode) return;
+      isDescriptionExpanded = !isDescriptionExpanded;
+      updateDescriptionState();
+    }
+
+    function onImageTouchStart(event) {
+      if (!currentProject || currentProject.images.length < 2) return;
+      if (event.touches.length !== 1) return;
+
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+    }
+
+    function onImageTouchEnd(event) {
+      if (!currentProject || currentProject.images.length < 2) return;
+      if (!touchStartX && !touchStartY) return;
+
+      const touch = event.changedTouches[0];
+      const diffX = touch.clientX - touchStartX;
+      const diffY = touch.clientY - touchStartY;
+
+      touchStartX = 0;
+      touchStartY = 0;
+
+      if (Math.abs(diffX) < 40) return;
+      if (Math.abs(diffX) < Math.abs(diffY)) return;
+
+      if (diffX < 0) {
+        showNextImage();
+      } else {
+        showPrevImage();
+      }
+    }
+
     document.querySelectorAll("[data-close-project]").forEach((element) => {
       element.addEventListener("click", closeProjectModal);
     });
@@ -1878,8 +2296,16 @@ description:
     prevImageButton.addEventListener("click", showPrevImage);
     nextImageButton.addEventListener("click", showNextImage);
     fullscreenImageButton.addEventListener("click", toggleImageFullscreen);
+    projectDescriptionToggle.addEventListener("click", handleDescriptionToggle);
 
-    projectMainImage.addEventListener("dblclick", toggleImageFullscreen);
+    projectImageWrap.addEventListener("touchstart", onImageTouchStart, { passive: true });
+    projectImageWrap.addEventListener("touchend", onImageTouchEnd, { passive: true });
+
+    projectMainImage.addEventListener("dblclick", () => {
+      if (!isMobileViewport()) {
+        toggleImageFullscreen();
+      }
+    });
 
     openBioButton.addEventListener("click", openBioModal);
     openBioButtonHero.addEventListener("click", openBioModal);
@@ -1887,9 +2313,23 @@ description:
     document.addEventListener("fullscreenchange", updateFullscreenButtonState);
     document.addEventListener("webkitfullscreenchange", updateFullscreenButtonState);
 
+    window.addEventListener("resize", () => {
+      if (projectModal.classList.contains("is-open")) {
+        syncProjectResponsiveState();
+      }
+    });
+
+    window.addEventListener("orientationchange", () => {
+      setTimeout(() => {
+        if (projectModal.classList.contains("is-open")) {
+          syncProjectResponsiveState();
+        }
+      }, 60);
+    });
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        if (getCurrentFullscreenElement() === projectViewer) {
+        if (!isMobileViewport() && getCurrentFullscreenElement() === projectViewer) {
           exitCurrentFullscreen();
           return;
         }
@@ -1902,7 +2342,7 @@ description:
         if (event.key === "ArrowLeft") showPrevImage();
         if (event.key === "ArrowRight") showNextImage();
 
-        if (event.key.toLowerCase() === "f") {
+        if (!isMobileViewport() && event.key.toLowerCase() === "f") {
           toggleImageFullscreen();
         }
       }
