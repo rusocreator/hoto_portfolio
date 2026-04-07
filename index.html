@@ -27,8 +27,8 @@
       --panel: #1a2026;
       --white: #ffffff;
 
-      --viewer-bg: #d2d2d2;
-      --viewer-surface: #d2d2d2;
+      --viewer-bg: #e2dfdb;
+      --viewer-surface: #e2dfdb;
 
       --shadow-soft: 0 10px 28px rgba(15, 20, 26, 0.05);
       --shadow-card: 0 20px 50px rgba(15, 20, 26, 0.08);
@@ -369,7 +369,7 @@
     }
 
     .section-head__left {
-      max-width: 820px;
+      max-width: 900px;
     }
 
     .section-kicker {
@@ -759,12 +759,13 @@
       grid-template-columns: minmax(0, 1.08fr) minmax(460px, 0.92fr);
       min-height: 0;
       flex: 1;
+      background: var(--paper);
     }
 
     .project-modal__viewer {
       position: relative;
       padding: 20px;
-      border-right: 1px solid var(--line);
+      border-right: 0;
       background: var(--paper);
       min-height: 0;
       display: grid;
@@ -777,19 +778,28 @@
       min-height: 0;
       border-radius: 0;
       overflow: hidden;
-      background: var(--viewer-bg);
+      background: var(--paper);
       border: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       touch-action: pan-y;
+      will-change: transform, opacity;
+    }
+
+    .project-modal__image-wrap.cursor-left {
+      cursor: w-resize;
+    }
+
+    .project-modal__image-wrap.cursor-right {
+      cursor: e-resize;
     }
 
     .project-modal__image {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: var(--viewer-bg);
+      background: var(--paper);
       cursor: zoom-in;
       user-select: none;
       -webkit-user-drag: none;
@@ -800,9 +810,9 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      z-index: 8;
-      width: 32px;
-      height: 32px;
+      z-index: 12;
+      width: 36px;
+      height: 36px;
       border-radius: 0;
       border: 0;
       background: transparent;
@@ -810,9 +820,10 @@
       cursor: pointer;
       display: none;
       place-items: center;
-      font-size: 26px;
+      font-size: 34px;
       line-height: 1;
       box-shadow: none;
+      padding: 0;
     }
 
     .project-modal__toolbar {
@@ -869,11 +880,16 @@
       transform: none;
     }
 
+    #toggleDesktopGalleryButton {
+      font-size: 26px;
+    }
+
     .project-modal__aside {
       display: grid;
       grid-template-rows: auto minmax(320px, 1fr);
       min-height: 0;
       overflow: hidden;
+      background: var(--paper);
     }
 
     .project-modal__content {
@@ -883,6 +899,7 @@
       max-height: min(300px, 34vh);
       scrollbar-width: thin;
       scrollbar-color: rgba(27, 35, 44, 0.24) transparent;
+      background: var(--paper);
     }
 
     .project-modal__meta {
@@ -910,6 +927,7 @@
       min-height: 0;
       scrollbar-width: thin;
       scrollbar-color: rgba(27, 35, 44, 0.24) transparent;
+      background: var(--paper);
     }
 
     .project-modal__thumbs-wrap::-webkit-scrollbar,
@@ -979,6 +997,23 @@
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    .modal__dialog--project.is-desktop-gallery-expanded .project-modal__content {
+      display: none;
+    }
+
+    .modal__dialog--project.is-desktop-gallery-expanded .project-modal__aside {
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    .modal__dialog--project.is-desktop-gallery-expanded .project-modal__thumbs-wrap {
+      border-top: 0;
+      padding-top: 24px;
+    }
+
+    .modal__dialog--project.is-desktop-gallery-expanded .project-modal__thumbs {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .project-description-overlay {
@@ -1113,39 +1148,61 @@
 
     .project-modal__viewer:fullscreen,
     .project-modal__viewer:-webkit-full-screen {
-      background: var(--viewer-bg);
-      padding: 0 0 10px;
+      background: var(--paper);
+      padding: 0;
       border-right: 0;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 0;
+      display: block;
+      overflow: hidden;
     }
 
     .project-modal__viewer:fullscreen .project-modal__image-wrap,
     .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap {
-      background: var(--viewer-bg);
+      background: var(--paper);
       border-radius: 0;
       border: 0;
+      height: 100%;
+      min-height: 100vh;
+      width: 100%;
+      cursor: default;
+    }
+
+    .project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-left,
+    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-left {
+      cursor: w-resize;
+    }
+
+    .project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-right,
+    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-right {
+      cursor: e-resize;
     }
 
     .project-modal__viewer:fullscreen .project-modal__image,
     .project-modal__viewer:-webkit-full-screen .project-modal__image {
-      background: var(--viewer-bg);
+      background: var(--paper);
+      cursor: inherit;
     }
 
     .project-modal__viewer:fullscreen .project-modal__toolbar,
     .project-modal__viewer:-webkit-full-screen .project-modal__toolbar {
-      background: var(--viewer-bg);
-      padding: 8px 18px 0;
+      display: none;
     }
 
-    .project-modal__viewer:fullscreen .project-modal__counter,
-    .project-modal__viewer:-webkit-full-screen .project-modal__counter {
-      color: var(--ink);
+    .project-modal__viewer:fullscreen .project-modal__viewer-close,
+    .project-modal__viewer:-webkit-full-screen .project-modal__viewer-close {
+      display: grid;
+      top: 16px;
+      right: 18px;
+      color: rgba(255, 255, 255, 0.96);
+      background: transparent;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      width: 36px;
+      height: 36px;
+      font-size: 36px;
     }
 
-    .project-modal__viewer:fullscreen .project-modal__toolbar-actions button,
-    .project-modal__viewer:-webkit-full-screen .project-modal__toolbar-actions button {
-      color: var(--ink);
+    .project-modal__viewer:fullscreen .project-modal__viewer-close:hover,
+    .project-modal__viewer:-webkit-full-screen .project-modal__viewer-close:hover {
+      transform: none;
     }
 
     .hidden {
@@ -1251,6 +1308,10 @@
 
       .site-header.is-compact .button {
         display: none;
+      }
+
+      #toggleDesktopGalleryButton {
+        display: none !important;
       }
     }
 
@@ -1585,7 +1646,8 @@
       min-height: 0;
     }
 
-    .modal__dialog--project.is-mobile-landscape #fullscreenImageButton {
+    .modal__dialog--project.is-mobile-landscape #fullscreenImageButton,
+    .modal__dialog--project.is-mobile-landscape #toggleDesktopGalleryButton {
       display: none !important;
     }
 
@@ -1663,9 +1725,8 @@
             <p class="section-kicker">Портфолио</p>
             <h2 class="section-title">Серии и направления работы</h2>
             <p class="section-text">
-              Основной акцент — репортаж. Но структура сайта сохраняет и другие линии работы:
-              постановочные и авторские серии. Каждый проект открывается как отдельная глава
-              со своей галереей и кратким описанием.
+              Выберите тип съемки по кнопкам ниже: по нажатию на фильтр сайт покажет только нужное направление —
+              репортаж, постановочную или творческую серию. Так проще быстро собрать подборку под конкретный интерес или задачу.
             </p>
           </div>
         </div>
@@ -1774,7 +1835,7 @@
         <div class="project-modal__viewer" id="projectViewer">
           <div class="project-modal__image-wrap" id="projectImageWrap">
             <img class="project-modal__image" id="projectMainImage" src="" alt="" />
-            <button class="project-modal__viewer-close" type="button" aria-label="Закрыть" data-close-project>×</button>
+            <button class="project-modal__viewer-close" id="projectViewerExitButton" type="button" aria-label="Выйти из просмотра">×</button>
           </div>
 
           <div class="project-modal__toolbar">
@@ -1783,6 +1844,7 @@
             <div class="project-modal__toolbar-actions">
               <button type="button" id="prevImageButton" aria-label="Предыдущее фото">←</button>
               <button type="button" id="nextImageButton" aria-label="Следующее фото">→</button>
+              <button type="button" id="toggleDesktopGalleryButton" aria-label="Развернуть блок миниатюр">↑</button>
               <button type="button" id="fullscreenImageButton" aria-label="Открыть фото на весь экран">⤢</button>
             </div>
           </div>
@@ -1815,80 +1877,80 @@
   </div>
 
   <div class="modal" id="bioModal" aria-hidden="true">
-  <div class="modal__backdrop" data-close-bio></div>
+    <div class="modal__backdrop" data-close-bio></div>
 
-  <div class="modal__dialog modal__dialog--bio" role="dialog" aria-modal="true" aria-labelledby="bioModalTitle">
-    <div class="modal__header">
-      <div class="modal__title-wrap">
-        <div class="modal__eyebrow">Биография</div>
-        <h2 class="modal__title" id="bioModalTitle">Геннадий Русляков</h2>
-        <p class="modal__sub">Фотограф, видеограф. Репортажная и авторская съемка.</p>
-      </div>
-      <button class="modal__close" type="button" aria-label="Закрыть" data-close-bio>×</button>
-    </div>
-
-    <div class="bio-modal__body">
-      <div>
-        <div class="bio-block">
-          <h3>О практике</h3>
-          <p>
-            Фотографией занимаюсь с середины 2010-х годов, а системно работаю с 2018-го. Интерес к ней появился задолго до первой «серьезной» камеры — еще в тот момент, когда снимал на телефон и пытался понять, почему один кадр работает, а другой нет. Позже один из фотографов, с которым я пересекся, подарил мне пленочный Canon AE-1. Это был важный момент: фотография перестала быть просто интересом и стала настоящей практикой.
-            <br /><br />
-            Больше всего мне близка репортажная съемка — живая, подвижная, связанная с реальным временем, людьми, пространством и атмосферой события. Но параллельно я работаю и с постановкой, и с портретом, и с личными сериями.
-            <br /><br />
-            Для меня фотография — это не только способ запомнить происходящее. Это способ исследовать жизнь через изображение: замечать ритм, паузу, жест, случайность, характер пространства и то, как из всего этого складывается внутренняя драматургия момента.
-          </p>
+    <div class="modal__dialog modal__dialog--bio" role="dialog" aria-modal="true" aria-labelledby="bioModalTitle">
+      <div class="modal__header">
+        <div class="modal__title-wrap">
+          <div class="modal__eyebrow">Биография</div>
+          <h2 class="modal__title" id="bioModalTitle">Геннадий Русляков</h2>
+          <p class="modal__sub">Фотограф, видеограф. Репортажная и авторская съемка.</p>
         </div>
-
-        <div class="bio-block">
-          <h3>Откуда пришел взгляд</h3>
-          <p>
-            До фотографии я занимался художественной росписью интерьеров, изучал живопись и композицию. Это дало мне базу, на которую я опираюсь до сих пор: внимание к форме, пятну, тону, ритму, к равновесию и нарушению равновесия в кадре.
-            <br /><br />
-            Со временем я всё больше замечал, что у живописи, фотографии и кино общие корни. Меняются инструменты, но остаются композиция, наблюдение и работа с вниманием. Наверное, поэтому мне всегда было интересно не просто «снимать», а разбираться, как именно изображение устроено.
-          </p>
-        </div>
-
-        <div class="bio-block">
-          <h3>Свет и театр</h3>
-          <p>
-            Существенная часть моей жизни связана с театром. Я работаю осветителем и художником по свету, а значит — постоянно имею дело не только с техникой, но и с атмосферой, смыслом и сценическим пространством.
-            <br /><br />
-            Этот опыт сильно повлиял на мою съемку. Я спокойно чувствую себя в сложном свете, умею быстро принимать решения, работать с динамичной средой и видеть, как свет организует пространство кадра. Это особенно важно в репортаже, где многое происходит быстро и без права на дубль.
-            <br /><br />
-            Параллельно я занимаюсь видеосъемкой. Видео для меня — естественное продолжение интереса к изображению, только там к композиции добавляется время. По отдельному запросу беру и видеоформаты.
-          </p>
-        </div>
-
-        <div class="bio-block">
-          <h3>Отдельный интерес</h3>
-          <p>
-            Кроме коммерческой и театральной съемки, мне важны природные и экспедиционные проекты. Я люблю фотографировать птиц, животных, пейзажи, работать в полевой среде, где многое строится на терпении, внимании и уважении к случайности.
-            <br /><br />
-            Такие съемки для меня особенно ценны, потому что в них фотография становится не только работой, но и способом наблюдать мир глубже.
-          </p>
-        </div>
+        <button class="modal__close" type="button" aria-label="Закрыть" data-close-bio>×</button>
       </div>
 
-      <div>
-        <ul class="bio-list">
-          <li>
-            <strong>Рабочая позиция:</strong> я продолжаю учиться, смотреть, пробовать и искать новые формы. Но в основе для меня всегда одно и то же: внимательное отношение к задаче, к человеку, к пространству и к тому, что на самом деле происходит внутри кадра.
-          </li>
-          <li>
-            <strong>Подход:</strong> мне важно не просто сделать набор красивых кадров, а понять задачу съемки и почувствовать, что в этом событии, месте или человеке действительно главное. В репортаже я стараюсь работать внимательно и ненавязчиво, сохраняя живой ритм происходящего. В постановочных съемках — искать точную форму без лишней декоративности.
-          </li>
-          <li>
-            <strong>Процесс:</strong> мне близок спокойный, собранный процесс работы, в котором есть место и дисциплине, и импровизации. Обычно лучший материал рождается там, где есть доверие, внимание к деталям и понимание общего замысла и настроения.
-          </li>
-          <li>
-            <strong>Форматы:</strong> репортажная съемка, авторские серии, постановка, портрет, театральная фотография, а также видео — по отдельному запросу.
-          </li>
-        </ul>
+      <div class="bio-modal__body">
+        <div>
+          <div class="bio-block">
+            <h3>О практике</h3>
+            <p>
+              Фотографией занимаюсь с середины 2010-х годов, а системно работаю с 2018-го. Интерес к ней появился задолго до первой «серьезной» камеры — еще в тот момент, когда снимал на телефон и пытался понять, почему один кадр работает, а другой нет. Позже один из фотографов, с которым я пересекся, подарил мне пленочный Canon AE-1. Это был важный момент: фотография перестала быть просто интересом и стала настоящей практикой.
+              <br /><br />
+              Больше всего мне близка репортажная съемка — живая, подвижная, связанная с реальным временем, людьми, пространством и атмосферой события. Но параллельно я работаю и с постановкой, и с портретом, и с личными сериями.
+              <br /><br />
+              Для меня фотография — это не только способ запомнить происходящее. Это способ исследовать жизнь через изображение: замечать ритм, паузу, жест, случайность, характер пространства и то, как из всего этого складывается внутренняя драматургия момента.
+            </p>
+          </div>
+
+          <div class="bio-block">
+            <h3>Откуда пришел взгляд</h3>
+            <p>
+              До фотографии я занимался художественной росписью интерьеров, изучал живопись и композицию. Это дало мне базу, на которую я опираюсь до сих пор: внимание к форме, пятну, тону, ритму, к равновесию и нарушению равновесия в кадре.
+              <br /><br />
+              Со временем я всё больше замечал, что у живописи, фотографии и кино общие корни. Меняются инструменты, но остаются композиция, наблюдение и работа с вниманием. Наверное, поэтому мне всегда было интересно не просто «снимать», а разбираться, как именно изображение устроено.
+            </p>
+          </div>
+
+          <div class="bio-block">
+            <h3>Свет и театр</h3>
+            <p>
+              Существенная часть моей жизни связана с театром. Я работаю осветителем и художником по свету, а значит — постоянно имею дело не только с техникой, но и с атмосферой, смыслом и сценическим пространством.
+              <br /><br />
+              Этот опыт сильно повлиял на мою съемку. Я спокойно чувствую себя в сложном свете, умею быстро принимать решения, работать с динамичной средой и видеть, как свет организует пространство кадра. Это особенно важно в репортаже, где многое происходит быстро и без права на дубль.
+              <br /><br />
+              Параллельно я занимаюсь видеосъемкой. Видео для меня — естественное продолжение интереса к изображению, только там к композиции добавляется время. По отдельному запросу беру и видеоформаты.
+            </p>
+          </div>
+
+          <div class="bio-block">
+            <h3>Отдельный интерес</h3>
+            <p>
+              Кроме коммерческой и театральной съемки, мне важны природные и экспедиционные проекты. Я люблю фотографировать птиц, животных, пейзажи, работать в полевой среде, где многое строится на терпении, внимании и уважении к случайности.
+              <br /><br />
+              Такие съемки для меня особенно ценны, потому что в них фотография становится не только работой, но и способом наблюдать мир глубже.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <ul class="bio-list">
+            <li>
+              <strong>Рабочая позиция:</strong> я продолжаю учиться, смотреть, пробовать и искать новые формы. Но в основе для меня всегда одно и то же: внимательное отношение к задаче, к человеку, к пространству и к тому, что на самом деле происходит внутри кадра.
+            </li>
+            <li>
+              <strong>Подход:</strong> мне важно не просто сделать набор красивых кадров, а понять задачу съемки и почувствовать, что в этом событии, месте или человеке действительно главное. В репортаже я стараюсь работать внимательно и ненавязчиво, сохраняя живой ритм происходящего. В постановочных съемках — искать точную форму без лишней декоративности.
+            </li>
+            <li>
+              <strong>Процесс:</strong> мне близок спокойный, собранный процесс работы, в котором есть место и дисциплине, и импровизации. Обычно лучший материал рождается там, где есть доверие, внимание к деталям и понимание общего замысла и настроения.
+            </li>
+            <li>
+              <strong>Форматы:</strong> репортажная съемка, авторские серии, постановка, портрет, театральная фотография, а также видео — по отдельному запросу.
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <script>
     const categoryLabels = {
@@ -1905,7 +1967,7 @@
         id: "reportage-akhmatova1",
         category: "reportage",
         title: "Открытие выставки Алексея Хвостенко",
-        year: "2024",
+        year: "2026",
         place: "Музей Анны Ахматовой, Санкт-Петербург",
         short: "Репортаж с открытия экспозиции, посвященной Алексею Хвостенко — поэту, художнику и автору песен.",
         description:
@@ -1965,19 +2027,19 @@
         ]
       },
       {
-  id: "reportage-elagin-ostrov",
-  category: "reportage",
-  title: "Елагин остров",
-  year: "2025",
-  place: "Елагин остров, Санкт-Петербург",
-  short: "Импровизационный черно-белый репортаж, снятый во время праздника на Елагином острове — о самом событии, людях и атмосфере места.",
-  description:
-    "Эта серия появилась импровизационно: я оказался на Елагином острове во время праздника, достал камеру и решил поснимать для себя. Меня интересовало не столько само мероприятие, сколько общая атмосфера острова в этот день — движение людей, пространство, случайные сцены, ритм прогулки и ощущение места. Несколько кадров связаны и с самим событием, но в целом это скорее наблюдение за средой и состоянием, чем буквальная съемка праздника. Серия оформлена в черно-белом решении, чтобы собрать внимание на атмосфере, жестах, свете и внутреннем ритме происходящего.",
-  cover: "images/reportage-elagin-ostrov/cover.jpg",
-  images: Array.from({ length: 32 }, (_, index) =>
-    `images/reportage-elagin-ostrov/${String(index + 1).padStart(2, "0")}.jpg`
-  )
-},
+        id: "reportage-elagin-ostrov",
+        category: "reportage",
+        title: "Елагин остров",
+        year: "2025",
+        place: "Елагин остров, Санкт-Петербург",
+        short: "Импровизационный черно-белый репортаж, снятый во время праздника на Елагином острове — о самом событии, людях и атмосфере места.",
+        description:
+          "Эта серия появилась импровизационно: я оказался на Елагином острове во время праздника, достал камеру и решил поснимать для себя. Меня интересовало не столько само мероприятие, сколько общая атмосфера острова в этот день — движение людей, пространство, случайные сцены, ритм прогулки и ощущение места. Несколько кадров связаны и с самим событием, но в целом это скорее наблюдение за средой и состоянием, чем буквальная съемка праздника. Серия оформлена в черно-белом решении, чтобы собрать внимание на атмосфере, жестах, свете и внутреннем ритме происходящего.",
+        cover: "images/reportage-elagin-ostrov/cover.jpg",
+        images: Array.from({ length: 32 }, (_, index) =>
+          `images/reportage-elagin-ostrov/${String(index + 1).padStart(2, "0")}.jpg`
+        )
+      },
       {
         id: "studiynaya-photoset-vereteno",
         category: "studio",
@@ -2044,7 +2106,9 @@
     const prevImageButton = document.getElementById("prevImageButton");
     const nextImageButton = document.getElementById("nextImageButton");
     const fullscreenImageButton = document.getElementById("fullscreenImageButton");
+    const toggleDesktopGalleryButton = document.getElementById("toggleDesktopGalleryButton");
     const projectHeaderDescriptionButton = document.getElementById("projectHeaderDescriptionButton");
+    const projectViewerExitButton = document.getElementById("projectViewerExitButton");
 
     const projectDescriptionOverlay = document.getElementById("projectDescriptionOverlay");
     const projectDescriptionOverlayBackdrop = document.getElementById("projectDescriptionOverlayBackdrop");
@@ -2059,9 +2123,19 @@
     let currentImageIndex = 0;
     let isMobileFocusMode = false;
     let isDescriptionOverlayOpen = false;
+    let isDesktopGalleryExpanded = false;
     let thumbButtons = [];
     let touchStartX = 0;
     let touchStartY = 0;
+    let viewerSingleClickTimer = null;
+    let suppressFullscreenClick = false;
+
+    const desktopFullscreenDrag = {
+      active: false,
+      startX: 0,
+      startY: 0,
+      moved: false
+    };
 
     function countByCategory(category) {
       if (category === "all") return portfolioData.length;
@@ -2170,6 +2244,10 @@
       return window.innerWidth <= 900;
     }
 
+    function isDesktopViewport() {
+      return window.innerWidth > 900;
+    }
+
     function isMobileLandscape() {
       return isMobileViewport() && window.innerWidth > window.innerHeight;
     }
@@ -2194,180 +2272,12 @@
       });
     }
 
-    function openProjectModal(projectId) {
-      const project = portfolioData.find((item) => item.id === projectId);
-      if (!project) return;
-
-      currentProject = project;
-      currentImageIndex = 0;
-      isMobileFocusMode = false;
-      isDescriptionOverlayOpen = false;
-
-      projectModalEyebrow.textContent = categoryLabels[project.category];
-      projectModalTitle.textContent = project.title;
-      projectModalSub.textContent = project.short;
-
-      projectMeta.innerHTML = `
-        <span>${project.year}</span>
-        <span>${project.place}</span>
-        <span>${project.images.length} фото</span>
-      `;
-
-      projectDescription.textContent = project.description;
-      projectDescriptionOverlayBody.textContent = project.description;
-
-      buildProjectThumbs();
-      syncProjectResponsiveState();
-      updateMainImage();
-
-      projectModal.classList.add("is-open");
-      projectModal.setAttribute("aria-hidden", "false");
-      setModalBodyLock();
-    }
-
-    function closeProjectModal() {
-      closeProjectDescriptionOverlay();
-
-      if (!isMobileViewport()) {
-        exitCurrentFullscreen();
-      }
-
-      projectModal.classList.remove("is-open");
-      projectModal.setAttribute("aria-hidden", "true");
-
-      currentProject = null;
-      currentImageIndex = 0;
-      isMobileFocusMode = false;
-      isDescriptionOverlayOpen = false;
-      thumbButtons = [];
-
-      projectMainImage.src = "";
-      projectMainImage.alt = "";
-      projectImageCounter.textContent = "1 / 1";
-      projectThumbs.innerHTML = "";
-
-      projectDialog.classList.remove("is-mobile-layout", "is-mobile-focus", "is-mobile-landscape");
-      setModalBodyLock();
-    }
-
-    function buildProjectThumbs() {
-      if (!currentProject) return;
-
-      projectThumbs.innerHTML = "";
-      thumbButtons = currentProject.images.map((src, index) => {
-        const thumbButton = document.createElement("button");
-        thumbButton.type = "button";
-        thumbButton.className = "thumb";
-        thumbButton.setAttribute("aria-label", `Открыть фото ${index + 1}`);
-        thumbButton.innerHTML = `<img src="${src}" alt="${currentProject.title} — миниатюра ${index + 1}" loading="lazy" />`;
-
-        thumbButton.addEventListener("click", () => {
-          currentImageIndex = index;
-          updateMainImage();
-        });
-
-        preventDoubleTapZoom(thumbButton);
-        projectThumbs.appendChild(thumbButton);
-        return thumbButton;
-      });
-    }
-
-    function updateThumbsActiveState() {
-      if (!thumbButtons.length) return;
-
-      thumbButtons.forEach((button, index) => {
-        button.classList.toggle("is-active", index === currentImageIndex);
-      });
-
-      const activeThumb = thumbButtons[currentImageIndex];
-      if (activeThumb) {
-        activeThumb.scrollIntoView({
-          block: "nearest",
-          inline: isMobileViewport() ? "center" : "nearest",
-          behavior: "smooth"
-        });
-      }
-    }
-
-    function updateMainImage() {
-      if (!currentProject || !currentProject.images.length) return;
-
-      const imageSrc = currentProject.images[currentImageIndex];
-      projectMainImage.src = imageSrc;
-      projectMainImage.alt = `${currentProject.title} — фото ${currentImageIndex + 1}`;
-      projectImageCounter.textContent = `${currentImageIndex + 1} / ${currentProject.images.length}`;
-
-      updateThumbsActiveState();
-      updateProjectControls();
-    }
-
-    function updateProjectControls() {
-      const hasProject = Boolean(currentProject);
-      const hasMultipleImages = hasProject && currentProject.images.length > 1;
-
-      prevImageButton.disabled = !hasMultipleImages;
-      nextImageButton.disabled = !hasMultipleImages;
-      updateFullscreenButtonState();
-      updateDescriptionButtonState();
-    }
-
-    function updateDescriptionButtonState() {
-      const showButton = currentProject && isMobilePortrait() && !isMobileFocusMode;
-      projectHeaderDescriptionButton.hidden = !showButton;
-    }
-
-    function syncProjectResponsiveState() {
-      const mobile = isMobileViewport();
-      const landscape = isMobileLandscape();
-
-      if (!mobile) {
-        isMobileFocusMode = false;
-      }
-
-      if (landscape) {
-        isMobileFocusMode = true;
-        closeProjectDescriptionOverlay();
-      }
-
-      if (!mobile) {
-        closeProjectDescriptionOverlay();
-      }
-
-      projectDialog.classList.toggle("is-mobile-layout", mobile);
-      projectDialog.classList.toggle("is-mobile-focus", mobile && isMobileFocusMode);
-      projectDialog.classList.toggle("is-mobile-landscape", mobile && landscape);
-
-      updateProjectControls();
-      updateThumbsActiveState();
-    }
-
-    function showPrevImage() {
-      if (!currentProject || currentProject.images.length < 2) return;
-      currentImageIndex =
-        (currentImageIndex - 1 + currentProject.images.length) % currentProject.images.length;
-      updateMainImage();
-    }
-
-    function showNextImage() {
-      if (!currentProject || currentProject.images.length < 2) return;
-      currentImageIndex = (currentImageIndex + 1) % currentProject.images.length;
-      updateMainImage();
-    }
-
-    function openBioModal() {
-      bioModal.classList.add("is-open");
-      bioModal.setAttribute("aria-hidden", "false");
-      setModalBodyLock();
-    }
-
-    function closeBioModal() {
-      bioModal.classList.remove("is-open");
-      bioModal.setAttribute("aria-hidden", "true");
-      setModalBodyLock();
-    }
-
     function getCurrentFullscreenElement() {
       return document.fullscreenElement || document.webkitFullscreenElement || null;
+    }
+
+    function isDesktopFullscreenViewer() {
+      return isDesktopViewport() && getCurrentFullscreenElement() === projectViewer;
     }
 
     function requestElementFullscreen(element) {
@@ -2399,6 +2309,62 @@
       return Promise.resolve();
     }
 
+    function clearViewerSingleClickTimer() {
+      if (viewerSingleClickTimer) {
+        clearTimeout(viewerSingleClickTimer);
+        viewerSingleClickTimer = null;
+      }
+    }
+
+    function resetDesktopFullscreenDrag(animated = true) {
+      if (animated) {
+        projectImageWrap.style.transition = "transform 220ms ease, opacity 220ms ease";
+      } else {
+        projectImageWrap.style.transition = "none";
+      }
+
+      projectImageWrap.style.transform = "translate3d(0, 0, 0) scale(1)";
+      projectImageWrap.style.opacity = "1";
+
+      if (animated) {
+        setTimeout(() => {
+          projectImageWrap.style.transition = "";
+        }, 240);
+      }
+    }
+
+    function syncDesktopGalleryExpandedState() {
+      const canUse = Boolean(currentProject) && isDesktopViewport() && !isDesktopFullscreenViewer();
+
+      projectDialog.classList.toggle("is-desktop-gallery-expanded", canUse && isDesktopGalleryExpanded);
+
+      toggleDesktopGalleryButton.hidden = !canUse;
+      toggleDesktopGalleryButton.textContent = canUse && isDesktopGalleryExpanded ? "↓" : "↑";
+      toggleDesktopGalleryButton.setAttribute(
+        "aria-label",
+        canUse && isDesktopGalleryExpanded ? "Показать описание" : "Развернуть блок миниатюр"
+      );
+    }
+
+    function updateViewerExitButtonState() {
+      if (isDesktopFullscreenViewer()) {
+        projectViewerExitButton.setAttribute("aria-label", "Выйти из полноэкранного режима");
+        return;
+      }
+
+      if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
+        projectViewerExitButton.setAttribute("aria-label", "Закрыть проект");
+        return;
+      }
+
+      projectViewerExitButton.setAttribute("aria-label", "Закрыть");
+    }
+
+    function updateDescriptionButtonState() {
+      const showButton = currentProject && isMobilePortrait() && !isMobileFocusMode;
+      projectHeaderDescriptionButton.hidden = !showButton;
+    }
+
     function updateFullscreenButtonState() {
       if (!currentProject) {
         fullscreenImageButton.disabled = true;
@@ -2418,12 +2384,191 @@
       }
 
       fullscreenImageButton.hidden = false;
-      const isFullscreen = getCurrentFullscreenElement() === projectViewer;
+      const isFullscreen = isDesktopFullscreenViewer();
       fullscreenImageButton.textContent = isFullscreen ? "⤡" : "⤢";
       fullscreenImageButton.setAttribute(
         "aria-label",
         isFullscreen ? "Выйти из полноэкранного режима" : "Открыть фото на весь экран"
       );
+    }
+
+    function updateProjectControls() {
+      const hasProject = Boolean(currentProject);
+      const hasMultipleImages = hasProject && currentProject.images.length > 1;
+
+      prevImageButton.disabled = !hasMultipleImages;
+      nextImageButton.disabled = !hasMultipleImages;
+
+      updateFullscreenButtonState();
+      updateDescriptionButtonState();
+      updateViewerExitButtonState();
+      syncDesktopGalleryExpandedState();
+    }
+
+    function updateThumbsActiveState() {
+      if (!thumbButtons.length) return;
+
+      thumbButtons.forEach((button, index) => {
+        button.classList.toggle("is-active", index === currentImageIndex);
+      });
+
+      const activeThumb = thumbButtons[currentImageIndex];
+      if (activeThumb) {
+        activeThumb.scrollIntoView({
+          block: "nearest",
+          inline: isMobileViewport() ? "center" : "nearest",
+          behavior: "smooth"
+        });
+      }
+    }
+
+    function updateMainImage() {
+      if (!currentProject || !currentProject.images.length) return;
+
+      const imageSrc = currentProject.images[currentImageIndex];
+      projectMainImage.src = imageSrc;
+      projectMainImage.alt = `${currentProject.title} — фото ${currentImageIndex + 1}`;
+      projectImageCounter.textContent = `${currentImageIndex + 1} / ${currentProject.images.length}`;
+
+      updateThumbsActiveState();
+      updateProjectControls();
+    }
+
+    function buildProjectThumbs() {
+      if (!currentProject) return;
+
+      projectThumbs.innerHTML = "";
+      thumbButtons = currentProject.images.map((src, index) => {
+        const thumbButton = document.createElement("button");
+        thumbButton.type = "button";
+        thumbButton.className = "thumb";
+        thumbButton.setAttribute("aria-label", `Открыть фото ${index + 1}`);
+        thumbButton.innerHTML = `<img src="${src}" alt="${currentProject.title} — миниатюра ${index + 1}" loading="lazy" />`;
+
+        thumbButton.addEventListener("click", () => {
+          currentImageIndex = index;
+          updateMainImage();
+        });
+
+        preventDoubleTapZoom(thumbButton);
+        projectThumbs.appendChild(thumbButton);
+        return thumbButton;
+      });
+    }
+
+    function syncProjectResponsiveState() {
+      const mobile = isMobileViewport();
+      const landscape = isMobileLandscape();
+
+      if (!mobile) {
+        isMobileFocusMode = false;
+      }
+
+      if (landscape) {
+        isMobileFocusMode = true;
+        closeProjectDescriptionOverlay();
+      }
+
+      if (!mobile) {
+        closeProjectDescriptionOverlay();
+      }
+
+      if (mobile) {
+        isDesktopGalleryExpanded = false;
+      }
+
+      projectDialog.classList.toggle("is-mobile-layout", mobile);
+      projectDialog.classList.toggle("is-mobile-focus", mobile && isMobileFocusMode);
+      projectDialog.classList.toggle("is-mobile-landscape", mobile && landscape);
+
+      updateProjectControls();
+      updateThumbsActiveState();
+    }
+
+    function openProjectModal(projectId) {
+      const project = portfolioData.find((item) => item.id === projectId);
+      if (!project) return;
+
+      currentProject = project;
+      currentImageIndex = 0;
+      isMobileFocusMode = false;
+      isDescriptionOverlayOpen = false;
+      isDesktopGalleryExpanded = false;
+
+      projectModalEyebrow.textContent = categoryLabels[project.category];
+      projectModalTitle.textContent = project.title;
+      projectModalSub.textContent = project.short;
+
+      projectMeta.innerHTML = `
+        <span>${project.year}</span>
+        <span>${project.place}</span>
+        <span>${project.images.length} фото</span>
+      `;
+
+      projectDescription.textContent = project.description;
+      projectDescriptionOverlayBody.textContent = project.description;
+
+      buildProjectThumbs();
+      syncProjectResponsiveState();
+      updateMainImage();
+
+      projectModal.classList.add("is-open");
+      projectModal.setAttribute("aria-hidden", "false");
+      setModalBodyLock();
+    }
+
+    function closeProjectModal() {
+      closeProjectDescriptionOverlay();
+      clearViewerSingleClickTimer();
+      resetDesktopFullscreenDrag(false);
+
+      if (!isMobileViewport()) {
+        exitCurrentFullscreen();
+      }
+
+      projectModal.classList.remove("is-open");
+      projectModal.setAttribute("aria-hidden", "true");
+
+      currentProject = null;
+      currentImageIndex = 0;
+      isMobileFocusMode = false;
+      isDescriptionOverlayOpen = false;
+      isDesktopGalleryExpanded = false;
+      thumbButtons = [];
+
+      projectMainImage.src = "";
+      projectMainImage.alt = "";
+      projectImageCounter.textContent = "1 / 1";
+      projectThumbs.innerHTML = "";
+
+      projectDialog.classList.remove(
+        "is-mobile-layout",
+        "is-mobile-focus",
+        "is-mobile-landscape",
+        "is-desktop-gallery-expanded"
+      );
+
+      projectImageWrap.classList.remove("cursor-left", "cursor-right");
+      setModalBodyLock();
+    }
+
+    function showPrevImage() {
+      if (!currentProject || currentProject.images.length < 2) return;
+      currentImageIndex =
+        (currentImageIndex - 1 + currentProject.images.length) % currentProject.images.length;
+      updateMainImage();
+    }
+
+    function showNextImage() {
+      if (!currentProject || currentProject.images.length < 2) return;
+      currentImageIndex = (currentImageIndex + 1) % currentProject.images.length;
+      updateMainImage();
+    }
+
+    function toggleDesktopGalleryExpanded() {
+      if (!currentProject || !isDesktopViewport() || isDesktopFullscreenViewer()) return;
+      isDesktopGalleryExpanded = !isDesktopGalleryExpanded;
+      syncDesktopGalleryExpandedState();
     }
 
     async function toggleImageFullscreen() {
@@ -2437,7 +2582,7 @@
         return;
       }
 
-      const isFullscreen = getCurrentFullscreenElement() === projectViewer;
+      const isFullscreen = isDesktopFullscreenViewer();
 
       try {
         if (isFullscreen) {
@@ -2462,6 +2607,18 @@
       projectDescriptionOverlay.classList.remove("is-open");
       projectDescriptionOverlay.setAttribute("aria-hidden", "true");
       isDescriptionOverlayOpen = false;
+    }
+
+    function openBioModal() {
+      bioModal.classList.add("is-open");
+      bioModal.setAttribute("aria-hidden", "false");
+      setModalBodyLock();
+    }
+
+    function closeBioModal() {
+      bioModal.classList.remove("is-open");
+      bioModal.setAttribute("aria-hidden", "true");
+      setModalBodyLock();
     }
 
     function onImageTouchStart(event) {
@@ -2495,6 +2652,109 @@
       }
     }
 
+    function updateDesktopFullscreenCursor(event) {
+      if (!isDesktopFullscreenViewer()) {
+        projectImageWrap.classList.remove("cursor-left", "cursor-right");
+        return;
+      }
+
+      const rect = projectImageWrap.getBoundingClientRect();
+      const goLeft = event.clientX < rect.left + rect.width / 2;
+
+      projectImageWrap.classList.toggle("cursor-left", goLeft);
+      projectImageWrap.classList.toggle("cursor-right", !goLeft);
+    }
+
+    function handleDesktopFullscreenClick(event) {
+      if (!isDesktopFullscreenViewer()) return;
+      if (event.target === projectViewerExitButton) return;
+
+      if (suppressFullscreenClick) {
+        suppressFullscreenClick = false;
+        return;
+      }
+
+      clearViewerSingleClickTimer();
+
+      const rect = projectImageWrap.getBoundingClientRect();
+      const goLeft = event.clientX < rect.left + rect.width / 2;
+
+      viewerSingleClickTimer = window.setTimeout(() => {
+        if (goLeft) {
+          showPrevImage();
+        } else {
+          showNextImage();
+        }
+        viewerSingleClickTimer = null;
+      }, 180);
+    }
+
+    function onDesktopFullscreenPointerDown(event) {
+      if (!isDesktopFullscreenViewer()) return;
+      if (event.button !== 0) return;
+
+      desktopFullscreenDrag.active = true;
+      desktopFullscreenDrag.startX = event.clientX;
+      desktopFullscreenDrag.startY = event.clientY;
+      desktopFullscreenDrag.moved = false;
+      suppressFullscreenClick = false;
+
+      if (projectImageWrap.setPointerCapture) {
+        projectImageWrap.setPointerCapture(event.pointerId);
+      }
+    }
+
+    function onDesktopFullscreenPointerMove(event) {
+      updateDesktopFullscreenCursor(event);
+
+      if (!desktopFullscreenDrag.active || !isDesktopFullscreenViewer()) return;
+
+      const deltaY = Math.max(0, event.clientY - desktopFullscreenDrag.startY);
+      const deltaX = event.clientX - desktopFullscreenDrag.startX;
+
+      if (deltaY < 6 && Math.abs(deltaX) < 6) return;
+      if (deltaY <= Math.abs(deltaX)) return;
+
+      desktopFullscreenDrag.moved = true;
+      suppressFullscreenClick = true;
+
+      const progress = Math.min(deltaY / (window.innerHeight * 0.30), 1);
+      const scale = 1 - progress * 0.05;
+
+      projectImageWrap.style.transition = "none";
+      projectImageWrap.style.transform = `translate3d(0, ${deltaY}px, 0) scale(${scale})`;
+      projectImageWrap.style.opacity = String(1 - progress * 0.18);
+    }
+
+    async function onDesktopFullscreenPointerUp(event) {
+      if (!desktopFullscreenDrag.active) return;
+
+      const deltaY = Math.max(0, event.clientY - desktopFullscreenDrag.startY);
+      const shouldExit =
+        isDesktopFullscreenViewer() &&
+        desktopFullscreenDrag.moved &&
+        deltaY > window.innerHeight * 0.18;
+
+      desktopFullscreenDrag.active = false;
+
+      if (shouldExit) {
+        resetDesktopFullscreenDrag(false);
+        await exitCurrentFullscreen();
+        return;
+      }
+
+      resetDesktopFullscreenDrag(true);
+      setTimeout(() => {
+        suppressFullscreenClick = false;
+      }, 60);
+    }
+
+    function onDesktopFullscreenPointerCancel() {
+      desktopFullscreenDrag.active = false;
+      resetDesktopFullscreenDrag(true);
+      suppressFullscreenClick = false;
+    }
+
     document.querySelectorAll("[data-close-project]").forEach((element) => {
       element.addEventListener("click", closeProjectModal);
       preventDoubleTapZoom(element);
@@ -2508,10 +2768,12 @@
     prevImageButton.addEventListener("click", showPrevImage);
     nextImageButton.addEventListener("click", showNextImage);
     fullscreenImageButton.addEventListener("click", toggleImageFullscreen);
+    toggleDesktopGalleryButton.addEventListener("click", toggleDesktopGalleryExpanded);
 
     preventDoubleTapZoom(prevImageButton);
     preventDoubleTapZoom(nextImageButton);
     preventDoubleTapZoom(fullscreenImageButton);
+    preventDoubleTapZoom(toggleDesktopGalleryButton);
 
     projectHeaderDescriptionButton.addEventListener("click", openProjectDescriptionOverlay);
     closeProjectDescriptionButton.addEventListener("click", closeProjectDescriptionOverlay);
@@ -2523,7 +2785,39 @@
     projectImageWrap.addEventListener("touchstart", onImageTouchStart, { passive: true });
     projectImageWrap.addEventListener("touchend", onImageTouchEnd, { passive: true });
 
+    projectImageWrap.addEventListener("mousemove", updateDesktopFullscreenCursor);
+    projectImageWrap.addEventListener("mouseenter", updateDesktopFullscreenCursor);
+    projectImageWrap.addEventListener("mouseleave", () => {
+      projectImageWrap.classList.remove("cursor-left", "cursor-right");
+    });
+
+    projectImageWrap.addEventListener("click", handleDesktopFullscreenClick);
+    projectImageWrap.addEventListener("pointerdown", onDesktopFullscreenPointerDown);
+    projectImageWrap.addEventListener("pointermove", onDesktopFullscreenPointerMove);
+    projectImageWrap.addEventListener("pointerup", onDesktopFullscreenPointerUp);
+    projectImageWrap.addEventListener("pointercancel", onDesktopFullscreenPointerCancel);
+
+    projectViewerExitButton.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      clearViewerSingleClickTimer();
+
+      if (isDesktopFullscreenViewer()) {
+        await exitCurrentFullscreen();
+        return;
+      }
+
+      if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
+        closeProjectModal();
+        return;
+      }
+
+      closeProjectModal();
+    });
+
     projectMainImage.addEventListener("dblclick", (event) => {
+      clearViewerSingleClickTimer();
+
       if (!isMobileViewport()) {
         toggleImageFullscreen();
       } else {
@@ -2536,11 +2830,27 @@
     preventDoubleTapZoom(openBioButton);
     preventDoubleTapZoom(openBioButtonHero);
 
-    document.addEventListener("fullscreenchange", updateFullscreenButtonState);
-    document.addEventListener("webkitfullscreenchange", updateFullscreenButtonState);
+    document.addEventListener("fullscreenchange", () => {
+      clearViewerSingleClickTimer();
+      resetDesktopFullscreenDrag(false);
+      projectImageWrap.classList.remove("cursor-left", "cursor-right");
+      updateFullscreenButtonState();
+      updateViewerExitButtonState();
+      syncDesktopGalleryExpandedState();
+    });
+
+    document.addEventListener("webkitfullscreenchange", () => {
+      clearViewerSingleClickTimer();
+      resetDesktopFullscreenDrag(false);
+      projectImageWrap.classList.remove("cursor-left", "cursor-right");
+      updateFullscreenButtonState();
+      updateViewerExitButtonState();
+      syncDesktopGalleryExpandedState();
+    });
 
     window.addEventListener("resize", () => {
       updateHeaderCompact();
+
       if (projectModal.classList.contains("is-open")) {
         syncProjectResponsiveState();
       }
@@ -2549,6 +2859,7 @@
     window.addEventListener("orientationchange", () => {
       setTimeout(() => {
         updateHeaderCompact();
+
         if (projectModal.classList.contains("is-open")) {
           syncProjectResponsiveState();
         }
@@ -2564,7 +2875,7 @@
           return;
         }
 
-        if (!isMobileViewport() && getCurrentFullscreenElement() === projectViewer) {
+        if (isDesktopFullscreenViewer()) {
           exitCurrentFullscreen();
           return;
         }
@@ -2579,6 +2890,10 @@
 
         if (!isMobileViewport() && event.key.toLowerCase() === "f") {
           toggleImageFullscreen();
+        }
+
+        if (!isMobileViewport() && event.key.toLowerCase() === "g") {
+          toggleDesktopGalleryExpanded();
         }
       }
     });
