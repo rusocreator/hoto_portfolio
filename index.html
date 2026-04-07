@@ -29,6 +29,7 @@
 
       --viewer-bg: #e2dfdb;
       --viewer-surface: #e2dfdb;
+      --viewer-fullscreen-bg: #e6e6e6;
 
       --shadow-soft: 0 10px 28px rgba(15, 20, 26, 0.05);
       --shadow-card: 0 20px 50px rgba(15, 20, 26, 0.08);
@@ -805,26 +806,28 @@
       -webkit-user-drag: none;
     }
 
-    .project-modal__viewer-close {
-      appearance: none;
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 12;
-      width: 36px;
-      height: 36px;
-      border-radius: 0;
-      border: 0;
-      background: transparent;
-      color: var(--ink);
-      cursor: pointer;
-      display: none;
-      place-items: center;
-      font-size: 34px;
-      line-height: 1;
-      box-shadow: none;
-      padding: 0;
-    }
+.project-modal__viewer-close {
+  appearance: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  width: 38px;
+  height: 38px;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  display: none;
+  place-items: center;
+  font-size: 38px;
+  line-height: 1;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
 
     .project-modal__toolbar {
       display: flex;
@@ -1146,64 +1149,64 @@
       padding-top: 0;
     }
 
-    .project-modal__viewer:fullscreen,
-    .project-modal__viewer:-webkit-full-screen {
-      background: var(--paper);
-      padding: 0;
-      border-right: 0;
-      display: block;
-      overflow: hidden;
-    }
+.project-modal__viewer:fullscreen,
+.project-modal__viewer:-webkit-full-screen {
+  background: var(--viewer-fullscreen-bg);
+  padding: 0;
+  border-right: 0;
+  display: block;
+  overflow: hidden;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__image-wrap,
-    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap {
-      background: var(--paper);
-      border-radius: 0;
-      border: 0;
-      height: 100%;
-      min-height: 100vh;
-      width: 100%;
-      cursor: default;
-    }
+.project-modal__viewer:fullscreen .project-modal__image-wrap,
+.project-modal__viewer:-webkit-full-screen .project-modal__image-wrap {
+  background: var(--viewer-fullscreen-bg);
+  border-radius: 0;
+  border: 0;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  cursor: default;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-left,
-    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-left {
-      cursor: w-resize;
-    }
+.project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-left,
+.project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-left {
+  cursor: w-resize;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-right,
-    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-right {
-      cursor: e-resize;
-    }
+.project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-right,
+.project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-right {
+  cursor: e-resize;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__image,
-    .project-modal__viewer:-webkit-full-screen .project-modal__image {
-      background: var(--paper);
-      cursor: inherit;
-    }
+.project-modal__viewer:fullscreen .project-modal__image,
+.project-modal__viewer:-webkit-full-screen .project-modal__image {
+  background: var(--viewer-fullscreen-bg);
+  cursor: inherit;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__toolbar,
-    .project-modal__viewer:-webkit-full-screen .project-modal__toolbar {
-      display: none;
-    }
+.project-modal__viewer:fullscreen .project-modal__toolbar,
+.project-modal__viewer:-webkit-full-screen .project-modal__toolbar {
+  display: none;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__viewer-close,
-    .project-modal__viewer:-webkit-full-screen .project-modal__viewer-close {
-      display: grid;
-      top: 16px;
-      right: 18px;
-      color: rgba(255, 255, 255, 0.96);
-      background: transparent;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-      width: 36px;
-      height: 36px;
-      font-size: 36px;
-    }
+.project-modal__viewer:fullscreen .project-modal__viewer-close,
+.project-modal__viewer:-webkit-full-screen .project-modal__viewer-close {
+  display: grid;
+  top: 16px;
+  right: 18px;
+  color: rgba(255, 255, 255, 0.96);
+  background: transparent;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
+  width: 38px;
+  height: 38px;
+  font-size: 38px;
+}
 
-    .project-modal__viewer:fullscreen .project-modal__viewer-close:hover,
-    .project-modal__viewer:-webkit-full-screen .project-modal__viewer-close:hover {
-      transform: none;
-    }
+.project-modal__viewer:fullscreen .project-modal__viewer-close:hover,
+.project-modal__viewer:-webkit-full-screen .project-modal__viewer-close:hover {
+  transform: none;
+}
 
     .hidden {
       display: none !important;
@@ -1553,17 +1556,17 @@
       height: 40px;
     }
 
-    .modal__dialog--project.is-mobile-focus,
-    .modal__dialog--project.is-mobile-landscape {
-      width: 100vw;
-      max-width: none;
-      min-height: 100dvh;
-      height: 100dvh;
-      margin: 0;
-      border-radius: 0;
-      border: 0;
-      background: var(--viewer-bg);
-    }
+ .modal__dialog--project.is-mobile-focus,
+.modal__dialog--project.is-mobile-landscape {
+  width: 100vw;
+  max-width: none;
+  min-height: 100dvh;
+  height: 100dvh;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  background: var(--viewer-fullscreen-bg);
+}
 
     .modal__dialog--project.is-mobile-focus .modal__header,
     .modal__dialog--project.is-mobile-landscape .modal__header {
@@ -1575,61 +1578,62 @@
       display: none;
     }
 
-    .modal__dialog--project.is-mobile-focus .project-modal__body,
-    .modal__dialog--project.is-mobile-landscape .project-modal__body {
-      display: flex;
-      flex-direction: column;
-      background: var(--viewer-bg);
-      min-height: 100%;
-    }
+.modal__dialog--project.is-mobile-focus .project-modal__body,
+.modal__dialog--project.is-mobile-landscape .project-modal__body {
+  display: flex;
+  flex-direction: column;
+  background: var(--viewer-fullscreen-bg);
+  min-height: 100%;
+}
+.modal__dialog--project.is-mobile-focus .project-modal__viewer,
+.modal__dialog--project.is-mobile-landscape .project-modal__viewer {
+  border-bottom: 0;
+  min-height: 100%;
+  height: 100%;
+  padding: 0;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+  background: var(--viewer-fullscreen-bg);
+}
 
-    .modal__dialog--project.is-mobile-focus .project-modal__viewer,
-    .modal__dialog--project.is-mobile-landscape .project-modal__viewer {
-      border-bottom: 0;
-      min-height: 100%;
-      height: 100%;
-      padding: 0 0 8px;
-      grid-template-rows: auto auto;
-      gap: 0;
-      background: var(--viewer-bg);
-    }
+.modal__dialog--project.is-mobile-focus .project-modal__image-wrap,
+.modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
+  border: 0;
+  border-radius: 0;
+  background: var(--viewer-fullscreen-bg);
+  height: 100dvh;
+  min-height: 100dvh;
+}
 
-    .modal__dialog--project.is-mobile-focus .project-modal__image-wrap,
-    .modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
-      border: 0;
-      border-radius: 0;
-      background: var(--viewer-bg);
-    }
+.modal__dialog--project.is-mobile-focus .project-modal__image,
+.modal__dialog--project.is-mobile-landscape .project-modal__image {
+  background: var(--viewer-fullscreen-bg);
+}
 
-    .modal__dialog--project.is-mobile-focus .project-modal__image,
-    .modal__dialog--project.is-mobile-landscape .project-modal__image {
-      background: var(--viewer-bg);
-    }
-
-    .modal__dialog--project.is-mobile-focus .project-modal__viewer-close,
-    .modal__dialog--project.is-mobile-landscape .project-modal__viewer-close {
-      display: grid;
-      top: 6px;
-      right: 10px;
-      width: 28px;
-      height: 28px;
-      background: transparent;
-      border: 0;
-      color: var(--ink);
-      font-size: 28px;
-      line-height: 1;
-    }
+.modal__dialog--project.is-mobile-focus .project-modal__viewer-close,
+.modal__dialog--project.is-mobile-landscape .project-modal__viewer-close {
+  display: grid;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 0;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
+  font-size: 34px;
+  line-height: 1;
+}
 
     .modal__dialog--project.is-mobile-focus .project-modal__image-wrap {
-      height: calc(100dvh - 54px);
-      min-height: 0;
-    }
+  height: 100dvh;
+  min-height: 100dvh;
+}
 
-    .modal__dialog--project.is-mobile-focus .project-modal__toolbar,
-    .modal__dialog--project.is-mobile-landscape .project-modal__toolbar {
-      padding: 8px 16px 0 16px;
-      background: var(--viewer-bg);
-    }
+.modal__dialog--project.is-mobile-focus .project-modal__toolbar,
+.modal__dialog--project.is-mobile-landscape .project-modal__toolbar {
+  display: none;
+}
 
     .modal__dialog--project.is-mobile-focus .project-modal__counter,
     .modal__dialog--project.is-mobile-landscape .project-modal__counter {
@@ -1641,10 +1645,10 @@
       color: var(--ink);
     }
 
-    .modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
-      height: calc(100dvh - 54px);
-      min-height: 0;
-    }
+.modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
+  height: 100dvh;
+  min-height: 100dvh;
+}
 
     .modal__dialog--project.is-mobile-landscape #fullscreenImageButton,
     .modal__dialog--project.is-mobile-landscape #toggleDesktopGalleryButton {
@@ -2128,7 +2132,8 @@
     let touchStartX = 0;
     let touchStartY = 0;
     let viewerSingleClickTimer = null;
-    let suppressFullscreenClick = false;
+let suppressFullscreenClick = false;
+let lastMobileTapTime = 0;
 
     const desktopFullscreenDrag = {
       active: false,
@@ -2346,19 +2351,24 @@
       );
     }
 
-    function updateViewerExitButtonState() {
-      if (isDesktopFullscreenViewer()) {
-        projectViewerExitButton.setAttribute("aria-label", "Выйти из полноэкранного режима");
-        return;
-      }
+function updateViewerExitButtonState() {
+  if (isDesktopFullscreenViewer()) {
+    projectViewerExitButton.setAttribute("aria-label", "Выйти из полноэкранного режима");
+    return;
+  }
 
-      if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
-        projectViewerExitButton.setAttribute("aria-label", "Закрыть проект");
-        return;
-      }
+  if (isMobileLandscape()) {
+    projectViewerExitButton.setAttribute("aria-label", "Закрыть проект");
+    return;
+  }
 
-      projectViewerExitButton.setAttribute("aria-label", "Закрыть");
-    }
+  if (isMobileViewport() && isMobileFocusMode) {
+    projectViewerExitButton.setAttribute("aria-label", "Вернуться к галерее");
+    return;
+  }
+
+  projectViewerExitButton.setAttribute("aria-label", "Закрыть");
+}
 
     function updateDescriptionButtonState() {
       const showButton = currentProject && isMobilePortrait() && !isMobileFocusMode;
@@ -2608,7 +2618,32 @@
       projectDescriptionOverlay.setAttribute("aria-hidden", "true");
       isDescriptionOverlayOpen = false;
     }
+function exitMobileFullscreenView() {
+  if (!isMobileViewport()) return;
 
+  if (isMobileLandscape()) {
+    closeProjectModal();
+    return;
+  }
+
+  if (isMobileFocusMode) {
+    isMobileFocusMode = false;
+    syncProjectResponsiveState();
+    return;
+  }
+
+  closeProjectModal();
+}
+
+async function exitDesktopFullscreenView() {
+  clearViewerSingleClickTimer();
+  resetDesktopFullscreenDrag(false);
+  suppressFullscreenClick = true;
+  await exitCurrentFullscreen();
+  setTimeout(() => {
+    suppressFullscreenClick = false;
+  }, 80);
+}
     function openBioModal() {
       bioModal.classList.add("is-open");
       bioModal.setAttribute("aria-hidden", "false");
@@ -2630,27 +2665,51 @@
       touchStartY = event.touches[0].clientY;
     }
 
-    function onImageTouchEnd(event) {
-      if (!currentProject || currentProject.images.length < 2) return;
-      if (isDescriptionOverlayOpen) return;
-      if (!touchStartX && !touchStartY) return;
+function onImageTouchEnd(event) {
+  if (!currentProject || !currentProject.images.length) return;
+  if (isDescriptionOverlayOpen) return;
+  if (!touchStartX && !touchStartY) return;
 
-      const touch = event.changedTouches[0];
-      const diffX = touch.clientX - touchStartX;
-      const diffY = touch.clientY - touchStartY;
+  const touch = event.changedTouches[0];
+  const diffX = touch.clientX - touchStartX;
+  const diffY = touch.clientY - touchStartY;
+  const absX = Math.abs(diffX);
+  const absY = Math.abs(diffY);
+  const isMobileFullscreenLike = isMobileViewport() && (isMobileFocusMode || isMobileLandscape());
 
-      touchStartX = 0;
-      touchStartY = 0;
+  touchStartX = 0;
+  touchStartY = 0;
 
-      if (Math.abs(diffX) < 40) return;
-      if (Math.abs(diffX) < Math.abs(diffY)) return;
+  if (isMobileFullscreenLike && diffY > 85 && absY > absX) {
+    exitMobileFullscreenView();
+    return;
+  }
 
-      if (diffX < 0) {
-        showNextImage();
-      } else {
-        showPrevImage();
-      }
+  if (absX >= 40 && absX > absY) {
+    if (diffX < 0) {
+      showNextImage();
+    } else {
+      showPrevImage();
     }
+    lastMobileTapTime = 0;
+    return;
+  }
+
+  if (isMobileFullscreenLike && absX < 14 && absY < 14) {
+    const now = Date.now();
+
+    if (now - lastMobileTapTime < 280) {
+      lastMobileTapTime = 0;
+      exitMobileFullscreenView();
+      return;
+    }
+
+    lastMobileTapTime = now;
+    return;
+  }
+
+  lastMobileTapTime = 0;
+}
 
     function updateDesktopFullscreenCursor(event) {
       if (!isDesktopFullscreenViewer()) {
@@ -2797,23 +2856,28 @@
     projectImageWrap.addEventListener("pointerup", onDesktopFullscreenPointerUp);
     projectImageWrap.addEventListener("pointercancel", onDesktopFullscreenPointerCancel);
 
-    projectViewerExitButton.addEventListener("click", async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      clearViewerSingleClickTimer();
+   projectViewerExitButton.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+});
 
-      if (isDesktopFullscreenViewer()) {
-        await exitCurrentFullscreen();
-        return;
-      }
+projectViewerExitButton.addEventListener("click", async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  clearViewerSingleClickTimer();
 
-      if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
-        closeProjectModal();
-        return;
-      }
+  if (isDesktopFullscreenViewer()) {
+    await exitDesktopFullscreenView();
+    return;
+  }
 
-      closeProjectModal();
-    });
+  if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
+    exitMobileFullscreenView();
+    return;
+  }
+
+  closeProjectModal();
+});
 
     projectMainImage.addEventListener("dblclick", (event) => {
       clearViewerSingleClickTimer();
