@@ -1957,14 +1957,15 @@
   </div>
 
   <script>
-    const categoryLabels = {
-      all: "Все",
-      reportage: "Репортаж",
-      studio: "Постановочная",
-      creative: "Творческая",
-      backstage: "Бэкстейдж",
-      nature: "Природа / экспедиции"
-    };
+const categoryLabels = {
+  all: "Все",
+  reportage: "Репортаж",
+  photowalk: "Фотопрогулка",
+  studio: "Постановочная",
+  creative: "Творческая",
+  backstage: "Бэкстейдж",
+  nature: "Природа / экспедиции"
+};
 
     const portfolioData = [
       {
@@ -2045,6 +2046,23 @@
         )
       },
       {
+  id: "photowalk-un",
+  category: "photowalk",
+  title: "Прогулка с Юн",
+  year: "2021",
+  place: "Санкт-Петербург",
+  short: "Прогулка с Юн — серия, выросшая из случайной встречи.",
+  description:
+    "Эта серия началась со случайной встречи. Я увидел Юн во время прогулки по городу, предложил ей пофотографироваться, и спустя некоторое время мы договорились о полноценной съемке. Тогда она училась в балетной школе Эйфмана. Съемка получилась интересной и красивой. Позже, уже в 2022 году, Юн уехала на родину, в Японию.",
+  cover: "images/fhotowalk-un/covar.jpg",
+  images: [
+    "images/fhotowalk-un/01.jpg",
+    "images/fhotowalk-un/02.jpg",
+    "images/fhotowalk-un/03.jpg",
+    "images/fhotowalk-un/04.jpg"
+  ]
+},
+      {
         id: "studiynaya-photoset-vereteno",
         category: "studio",
         title: "Светлана. Noir & Rock Chic",
@@ -2067,7 +2085,7 @@
       },
       {
         id: "photo-walk",
-        category: "creative",
+        category: "photowalk",
         title: "Дима и Вероника",
         year: "2025",
         place: "Литейный район, Санкт-Петербург",
@@ -2086,7 +2104,7 @@
       }
     ];
 
-    const filterOrder = ["all", "reportage", "studio", "creative", "backstage", "nature"];
+    const filterOrder = ["all", "reportage", "photowalk", "studio", "creative", "backstage", "nature"];
 
     const siteHeader = document.getElementById("siteHeader");
 
