@@ -248,7 +248,7 @@
     }
 
     .hero {
-      padding: 78px 0 96px;
+      padding: 78px 0 72px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -302,7 +302,45 @@
       margin-top: 36px;
     }
 
-    .hero__panel {
+    .hero__photo-card {
+      position: relative;
+      min-height: 620px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero__photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(100%);
+    }
+
+    .hero__photo-overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 22px 22px 20px;
+      background: linear-gradient(to top, rgba(12, 16, 20, 0.62), rgba(12, 16, 20, 0.00));
+      color: var(--white);
+    }
+
+    .hero__photo-caption {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .hero-directions {
+      padding: 28px 0 0;
+    }
+
+    .hero-directions__panel {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
@@ -310,7 +348,7 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .hero__panel-label {
+    .hero-directions__label {
       margin: 0 0 18px;
       color: var(--muted);
       font-size: 12px;
@@ -318,25 +356,21 @@
       letter-spacing: 0.16em;
     }
 
-    .hero__panel-list {
+    .hero-directions__list {
       display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .hero__panel-item {
+    .hero-directions__item {
       padding-top: 18px;
       border-top: 1px solid var(--line);
     }
 
-    .hero__panel-item:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .hero__panel-item h3 {
+    .hero-directions__item h3 {
       margin: 0 0 6px;
       font-size: 18px;
       line-height: 1.2;
@@ -344,7 +378,7 @@
       letter-spacing: -0.02em;
     }
 
-    .hero__panel-item p {
+    .hero-directions__item p {
       margin: 0;
       color: var(--muted);
       font-size: 15px;
@@ -806,28 +840,28 @@
       -webkit-user-drag: none;
     }
 
-.project-modal__viewer-close {
-  appearance: none;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 60;
-  width: 38px;
-  height: 38px;
-  border-radius: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ink);
-  cursor: pointer;
-  display: none;
-  place-items: center;
-  font-size: 38px;
-  line-height: 1;
-  box-shadow: none;
-  padding: 0;
-  pointer-events: auto;
-  touch-action: manipulation;
-}
+    .project-modal__viewer-close {
+      appearance: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 60;
+      width: 38px;
+      height: 38px;
+      border-radius: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: none;
+      place-items: center;
+      font-size: 38px;
+      line-height: 1;
+      box-shadow: none;
+      padding: 0;
+      pointer-events: auto;
+      touch-action: manipulation;
+    }
 
     .project-modal__toolbar {
       display: flex;
@@ -1149,64 +1183,68 @@
       padding-top: 0;
     }
 
-.project-modal__viewer:fullscreen,
-.project-modal__viewer:-webkit-full-screen {
-  background: var(--viewer-fullscreen-bg);
-  padding: 0;
-  border-right: 0;
-  display: block;
-  overflow: hidden;
-}
+    .project-modal__viewer:fullscreen,
+    .project-modal__viewer:-webkit-full-screen {
+      background: var(--viewer-fullscreen-bg);
+      padding: 0;
+      border-right: 0;
+      display: block;
+      overflow: hidden;
+    }
 
-.project-modal__viewer:fullscreen .project-modal__image-wrap,
-.project-modal__viewer:-webkit-full-screen .project-modal__image-wrap {
-  background: var(--viewer-fullscreen-bg);
-  border-radius: 0;
-  border: 0;
-  height: 100%;
-  min-height: 100vh;
-  width: 100%;
-  cursor: default;
-}
+    .project-modal__viewer:fullscreen::backdrop {
+      background: var(--viewer-fullscreen-bg);
+    }
 
-.project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-left,
-.project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-left {
-  cursor: w-resize;
-}
+    .project-modal__viewer:fullscreen .project-modal__image-wrap,
+    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap {
+      background: var(--viewer-fullscreen-bg);
+      border-radius: 0;
+      border: 0;
+      height: 100%;
+      min-height: 100vh;
+      width: 100%;
+      cursor: default;
+    }
 
-.project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-right,
-.project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-right {
-  cursor: e-resize;
-}
+    .project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-left,
+    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-left {
+      cursor: w-resize;
+    }
 
-.project-modal__viewer:fullscreen .project-modal__image,
-.project-modal__viewer:-webkit-full-screen .project-modal__image {
-  background: var(--viewer-fullscreen-bg);
-  cursor: inherit;
-}
+    .project-modal__viewer:fullscreen .project-modal__image-wrap.cursor-right,
+    .project-modal__viewer:-webkit-full-screen .project-modal__image-wrap.cursor-right {
+      cursor: e-resize;
+    }
 
-.project-modal__viewer:fullscreen .project-modal__toolbar,
-.project-modal__viewer:-webkit-full-screen .project-modal__toolbar {
-  display: none;
-}
+    .project-modal__viewer:fullscreen .project-modal__image,
+    .project-modal__viewer:-webkit-full-screen .project-modal__image {
+      background: var(--viewer-fullscreen-bg);
+      cursor: inherit;
+    }
 
-.project-modal__viewer:fullscreen .project-modal__viewer-close,
-.project-modal__viewer:-webkit-full-screen .project-modal__viewer-close {
-  display: grid;
-  top: 16px;
-  right: 18px;
-  color: rgba(255, 255, 255, 0.96);
-  background: transparent;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
-  width: 38px;
-  height: 38px;
-  font-size: 38px;
-}
+    .project-modal__viewer:fullscreen .project-modal__toolbar,
+    .project-modal__viewer:-webkit-full-screen .project-modal__toolbar {
+      display: none;
+    }
 
-.project-modal__viewer:fullscreen .project-modal__viewer-close:hover,
-.project-modal__viewer:-webkit-full-screen .project-modal__viewer-close:hover {
-  transform: none;
-}
+    .project-modal__viewer:fullscreen .project-modal__viewer-close,
+    .project-modal__viewer:-webkit-full-screen .project-modal__viewer-close {
+      display: grid;
+      top: 16px;
+      right: 18px;
+      color: rgba(255, 255, 255, 0.96);
+      background: transparent;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
+      width: 38px;
+      height: 38px;
+      font-size: 38px;
+    }
+
+    .project-modal__viewer:fullscreen .project-modal__viewer-close:hover,
+    .project-modal__viewer:-webkit-full-screen .project-modal__viewer-close:hover {
+      transform: none;
+    }
 
     .hidden {
       display: none !important;
@@ -1216,6 +1254,14 @@
       .hero__grid,
       .contact-panel__grid,
       .bio-modal__body {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__photo-card {
+        min-height: 460px;
+      }
+
+      .hero-directions__list {
         grid-template-columns: 1fr;
       }
 
@@ -1324,7 +1370,15 @@
       }
 
       .hero {
-        padding: 54px 0 72px;
+        padding: 54px 0 52px;
+      }
+
+      .hero__photo-card {
+        min-height: 340px;
+      }
+
+      .hero__photo-overlay {
+        padding: 18px 18px 16px;
       }
 
       .section {
@@ -1556,17 +1610,17 @@
       height: 40px;
     }
 
- .modal__dialog--project.is-mobile-focus,
-.modal__dialog--project.is-mobile-landscape {
-  width: 100vw;
-  max-width: none;
-  min-height: 100dvh;
-  height: 100dvh;
-  margin: 0;
-  border-radius: 0;
-  border: 0;
-  background: var(--viewer-fullscreen-bg);
-}
+    .modal__dialog--project.is-mobile-focus,
+    .modal__dialog--project.is-mobile-landscape {
+      width: 100vw;
+      max-width: none;
+      min-height: 100dvh;
+      height: 100dvh;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
+      background: var(--viewer-fullscreen-bg);
+    }
 
     .modal__dialog--project.is-mobile-focus .modal__header,
     .modal__dialog--project.is-mobile-landscape .modal__header {
@@ -1578,62 +1632,63 @@
       display: none;
     }
 
-.modal__dialog--project.is-mobile-focus .project-modal__body,
-.modal__dialog--project.is-mobile-landscape .project-modal__body {
-  display: flex;
-  flex-direction: column;
-  background: var(--viewer-fullscreen-bg);
-  min-height: 100%;
-}
-.modal__dialog--project.is-mobile-focus .project-modal__viewer,
-.modal__dialog--project.is-mobile-landscape .project-modal__viewer {
-  border-bottom: 0;
-  min-height: 100%;
-  height: 100%;
-  padding: 0;
-  grid-template-rows: minmax(0, 1fr);
-  gap: 0;
-  background: var(--viewer-fullscreen-bg);
-}
+    .modal__dialog--project.is-mobile-focus .project-modal__body,
+    .modal__dialog--project.is-mobile-landscape .project-modal__body {
+      display: flex;
+      flex-direction: column;
+      background: var(--viewer-fullscreen-bg);
+      min-height: 100%;
+    }
 
-.modal__dialog--project.is-mobile-focus .project-modal__image-wrap,
-.modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
-  border: 0;
-  border-radius: 0;
-  background: var(--viewer-fullscreen-bg);
-  height: 100dvh;
-  min-height: 100dvh;
-}
+    .modal__dialog--project.is-mobile-focus .project-modal__viewer,
+    .modal__dialog--project.is-mobile-landscape .project-modal__viewer {
+      border-bottom: 0;
+      min-height: 100%;
+      height: 100%;
+      padding: 0;
+      grid-template-rows: minmax(0, 1fr);
+      gap: 0;
+      background: var(--viewer-fullscreen-bg);
+    }
 
-.modal__dialog--project.is-mobile-focus .project-modal__image,
-.modal__dialog--project.is-mobile-landscape .project-modal__image {
-  background: var(--viewer-fullscreen-bg);
-}
+    .modal__dialog--project.is-mobile-focus .project-modal__image-wrap,
+    .modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
+      border: 0;
+      border-radius: 0;
+      background: var(--viewer-fullscreen-bg);
+      height: 100dvh;
+      min-height: 100dvh;
+    }
 
-.modal__dialog--project.is-mobile-focus .project-modal__viewer-close,
-.modal__dialog--project.is-mobile-landscape .project-modal__viewer-close {
-  display: grid;
-  top: 10px;
-  right: 12px;
-  width: 34px;
-  height: 34px;
-  background: transparent;
-  border: 0;
-  color: rgba(255, 255, 255, 0.96);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
-  font-size: 34px;
-  line-height: 1;
-}
+    .modal__dialog--project.is-mobile-focus .project-modal__image,
+    .modal__dialog--project.is-mobile-landscape .project-modal__image {
+      background: var(--viewer-fullscreen-bg);
+    }
+
+    .modal__dialog--project.is-mobile-focus .project-modal__viewer-close,
+    .modal__dialog--project.is-mobile-landscape .project-modal__viewer-close {
+      display: grid;
+      top: 10px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      background: transparent;
+      border: 0;
+      color: rgba(255, 255, 255, 0.96);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
+      font-size: 34px;
+      line-height: 1;
+    }
 
     .modal__dialog--project.is-mobile-focus .project-modal__image-wrap {
-  height: 100dvh;
-  min-height: 100dvh;
-}
+      height: 100dvh;
+      min-height: 100dvh;
+    }
 
-.modal__dialog--project.is-mobile-focus .project-modal__toolbar,
-.modal__dialog--project.is-mobile-landscape .project-modal__toolbar {
-  display: none;
-}
+    .modal__dialog--project.is-mobile-focus .project-modal__toolbar,
+    .modal__dialog--project.is-mobile-landscape .project-modal__toolbar {
+      display: none;
+    }
 
     .modal__dialog--project.is-mobile-focus .project-modal__counter,
     .modal__dialog--project.is-mobile-landscape .project-modal__counter {
@@ -1645,10 +1700,10 @@
       color: var(--ink);
     }
 
-.modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
-  height: 100dvh;
-  min-height: 100dvh;
-}
+    .modal__dialog--project.is-mobile-landscape .project-modal__image-wrap {
+      height: 100dvh;
+      min-height: 100dvh;
+    }
 
     .modal__dialog--project.is-mobile-landscape #fullscreenImageButton,
     .modal__dialog--project.is-mobile-landscape #toggleDesktopGalleryButton {
@@ -1689,7 +1744,7 @@
     <section class="hero">
       <div class="container hero__grid">
         <div>
-          <div class="eyebrow">Фотография как наблюдение за миром вокуруг и внутри.</div>
+          <div class="eyebrow">Фотография как наблюдение за миром вокруг и внутри.</div>
           <h1 class="hero__title">Геннадий Русляков — фотограф.</h1>
           <p class="hero__lead">
             Основной фокус — репортажная фотография: театр, события, люди,
@@ -1702,23 +1757,40 @@
           </div>
         </div>
 
-        <aside class="hero__panel" aria-label="Кратко о направлениях">
-          <p class="hero__panel-label">Направления</p>
-          <ul class="hero__panel-list">
-            <li class="hero__panel-item">
+        <aside class="hero__photo-card" aria-label="Фотография Геннадия Руслякова">
+          <img
+            src="images/profile/author.jpg"
+            alt="Геннадий Русляков"
+            class="hero__photo"
+          />
+          <div class="hero__photo-overlay">
+            <p class="hero__photo-caption">
+              Геннадий Русляков — фотограф. Санкт-Петербург.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="hero-directions">
+      <div class="container">
+        <div class="hero-directions__panel" aria-label="Кратко о направлениях">
+          <p class="hero-directions__label">Направления</p>
+          <ul class="hero-directions__list">
+            <li class="hero-directions__item">
               <h3>Репортаж</h3>
               <p>Мероприятия, театр, сцена, среда, город, люди, ситуации.</p>
             </li>
-            <li class="hero__panel-item">
+            <li class="hero-directions__item">
               <h3>Постановочная съемка</h3>
               <p>Работа со вспышками, студийным светом и работа в команде.</p>
             </li>
-            <li class="hero__panel-item">
+            <li class="hero-directions__item">
               <h3>Авторские серии</h3>
               <p>Личные визуальные наблюдения, черно-белый язык, природа, экспедиционное и внежанровое.</p>
             </li>
           </ul>
-        </aside>
+        </div>
       </div>
     </section>
 
@@ -1747,7 +1819,7 @@
             <h2 class="section-title">Документальность, свет, наблюдение и постоянная учеба</h2>
             <p class="section-text">
               В фотографию я пришёл через живопись, композицию и работу с пространством.
-Отдельное влияние, на мой взгляд, оказывает театр. Работаю художником по свету, и это даёт интересный опыт работы со световой средой и пространством.
+              Отдельное влияние, на мой взгляд, оказывает театр. Работаю художником по свету, и это даёт интересный опыт работы со световой средой и пространством.
             </p>
           </div>
         </div>
@@ -1767,7 +1839,7 @@
             <div class="approach-card__index">02 / Свет</div>
             <h3>Изучение света</h3>
             <p>
-              Работа со студийным светом, вспышками и театральная практика помогают 
+              Работа со студийным светом, вспышками и театральная практика помогают
               собирать кадр.
             </p>
           </article>
@@ -1776,7 +1848,7 @@
             <div class="approach-card__index">03 / Авторское</div>
             <h3>Черно-белый язык и поиск формы</h3>
             <p>
-              Мне близка фотография с пленочным ощущением. Часто кадр стараюсь сделать похожим на сновидение, мираж. Стараюсь уделать вниманием к фактуре и текстуре. Открыт
+              Мне близка фотография с пленочным ощущением. Часто кадр стараюсь сделать похожим на сновидение, мираж. Стараюсь уделять внимание фактуре и текстуре. Открыт
               тону, недосказанности. Но при этом я открыт к экспериментам,
               новым задачам и разным масштабам съемки.
             </p>
@@ -1894,18 +1966,18 @@
           <div class="bio-block">
             <h3>О практике</h3>
             <p>
-              Мой интерес к фотографии зародился задолго до появления первой «серьёзной» камеры: ещё снимая на телефон, я пытался понять, почему одни кадры получаются удачными, а другие — нет. В середине 2019‑го года я начал заниматься фотографией осознанно, а с 2020‑го перешёл к системной работе. Поворотным моментом стал подарок от одного фотографа, с которым мне довелось познакомиться: он вручил мне плёночный Canon AE‑1. С этого момента фотография перестала быть просто увлечением — она превратилась в практику познания мира через избражение. Тут есть о чем подумать и поговорить. 
+              Мой интерес к фотографии зародился задолго до появления первой «серьёзной» камеры: ещё снимая на телефон, я пытался понять, почему одни кадры получаются удачными, а другие — нет. В середине 2019‑го года я начал заниматься фотографией осознанно, а с 2020‑го перешёл к системной работе. Поворотным моментом стал подарок от одного фотографа, с которым мне довелось познакомиться: он вручил мне плёночный Canon AE‑1. С этого момента фотография перестала быть просто увлечением — она превратилась в практику познания мира через изображение. Тут есть о чем подумать и поговорить.
               <br /><br />
               Больше всего мне близка репортажная съемка — живая, подвижная, связанная с реальным временем, людьми, пространством и атмосферой события. Но параллельно я работаю и с постановкой, и с портретом, и с личными сериями.
               <br /><br />
-              Для меня фотография — это не только способ запомнить происходящее. Это способ исследовать жизнь через изображение: замечать детали, моменты, характер пространства и то, как из всего этого по итогу складывается энергия композиции и смыслов. Думаю, этот путь доинною в жизнь. 
+              Для меня фотография — это не только способ запомнить происходящее. Это способ исследовать жизнь через изображение: замечать детали, моменты, характер пространства и то, как из всего этого по итогу складывается энергия композиции и смыслов. Думаю, этот путь длиною в жизнь.
             </p>
           </div>
 
           <div class="bio-block">
             <h3>Откуда пришел взгляд</h3>
             <p>
-              До фотографии я занимался художественной росписью интерьеров, изучал живопись и композицию. Был и период работы над интерьерными проектами. Всё это дало мне базу, на которую я опираюсь до сих пор и от которой отталкиваюсь в творческих экспериментах, продолжая исследовать форму, тон, ритм, гармонию. Что это такое? В глазах ли смотрящего?
+              До фотографии я занимался художественной росписью интерьеров, изучал живопись и композицию. Был и период работы над интерьерными проектами. Всё это дало мне базу, на которую я опираюсь до сих пор и от которой отталкиваюсь в творческих экспериментах, продолжая исследовать форму, тон, ритм, гармонию.
               <br /><br />
               Со временем я всё больше замечал, что у живописи, фотографии, кино, музыки общие корни. Меняются инструменты, но остаются композиция, ритм, необходимость глубины, смысловые планы. Наверное, поэтому мне всегда было интересно не просто «снимать», а разбираться, как именно изображение устроено. И видео. И фото. И литературные произведения. И театральные постановки.
             </p>
@@ -1914,9 +1986,9 @@
           <div class="bio-block">
             <h3>Свет и театр</h3>
             <p>
-              Существенная часть моей жизни связана с театром. Я работаю осветителем и художником по свету. Часто имею дело не только с техникой, но и с атмосферой, смыслом и сценическим пространством. Это очень интересно. 
+              Существенная часть моей жизни связана с театром. Я работаю осветителем и художником по свету. Часто имею дело не только с техникой, но и с атмосферой, смыслом и сценическим пространством. Это очень интересно.
               <br /><br />
-              Этот опыт сильно повлиял на мою съемку. Это даёт некоторую увереность при работе со сложным светом, в принятии композиционных решений, в работе с динамичной средой. Это особенно важно в репортаже, где многое происходит быстро и без права на дубль. Путь изучения продолжается.  
+              Этот опыт сильно повлиял на мою съемку. Это даёт некоторую уверенность при работе со сложным светом, в принятии композиционных решений, в работе с динамичной средой. Это особенно важно в репортаже, где многое происходит быстро и без права на дубль. Путь изучения продолжается.
               <br /><br />
               Параллельно занимаюсь видеосъёмкой. Видео для меня — естественное продолжение интереса к изображению, только добавляется временное измерение. Это вносит кардинальные правки в закономерности восприятия, хотя общая композиционная база прощупывается достаточно легко.
             </p>
@@ -1925,9 +1997,9 @@
           <div class="bio-block">
             <h3>Отдельный интерес</h3>
             <p>
-              Кроме коммерческой и театральной съемки, мне важны природные и экспедиционные проекты. Я люблю фотографировать птиц, животных, пейзажи, работать в полевой среде, где многое строится на выносливости и внимании к случайности. 
+              Кроме коммерческой и театральной съемки, мне важны природные и экспедиционные проекты. Я люблю фотографировать птиц, животных, пейзажи, работать в полевой среде, где многое строится на выносливости и внимании к случайности.
               <br /><br />
-              Такие съемки для меня особенно ценны, потому что в них фотография становится не только работой, но и способом наблюдать мир. 
+              Такие съемки для меня особенно ценны, потому что в них фотография становится не только работой, но и способом наблюдать мир.
             </p>
           </div>
         </div>
@@ -1938,7 +2010,7 @@
               <strong>Рабочая позиция:</strong> я продолжаю учиться, смотреть, пробовать и искать новые формы. Но в основе для меня всегда одно и то же: внимательное отношение к задаче, к человеку, к пространству.
             </li>
             <li>
-              <strong>Подход:</strong> мне важно не просто сделать набор красивых кадров, а понять задачу съемки и почувствовать, что в этом событии, месте или человеке действительно главное. В репортаже я стараюсь работать внимательно и ненавязчиво, сохраняя живой ритм происходящего. Но иногда добавляю и творческий элемент в этот жанр, если задачи позволяют. 
+              <strong>Подход:</strong> мне важно не просто сделать набор красивых кадров, а понять задачу съемки и почувствовать, что в этом событии, месте или человеке действительно главное. В репортаже я стараюсь работать внимательно и ненавязчиво, сохраняя живой ритм происходящего. Но иногда добавляю и творческий элемент в этот жанр, если задачи позволяют.
             </li>
             <li>
               <strong>Процесс:</strong> мне близок спокойный, собранный процесс работы, в котором есть место и дисциплине, и импровизации. И конечно же хорошее настроение. Обычно лучший материал рождается там, где есть доверие, внимание к деталям и понимание общего замысла и настроения.
@@ -2030,23 +2102,23 @@ const categoryLabels = {
         ]
       },
       {
-  id: "study-katya-photoset",
-  category: "studio",
-  title: "Катя",
-  year: "2021",
-  place: "Санкт-Петербург",
-  short: "Студийная съемка с Катей.",
-  description:
-    "Эта серия появилась после одного из мероприятий, где меня порекомендовали как фотографа. Позже Катя обратилась ко мне уже за отдельной студийной съемкой, и мы реализовали этот фотосет вместе с визажистом-стилистом, которая помогала на площадке. В результате получилась серия, которая стала для меня важной частью ранней студийной практики. После этой съемки мы продолжили общение и в дальнейшем еще не раз возвращались к совместной работе.",
-  cover: "images/study-katya-photoset/cover.jpg",
-  images: [
-    "images/study-katya-photoset/01.jpg",
-    "images/study-katya-photoset/02.jpg",
-    "images/study-katya-photoset/03.jpg",
-    "images/study-katya-photoset/04.jpg",
-    "images/study-katya-photoset/05.jpg"
-  ]
-},
+        id: "study-katya-photoset",
+        category: "studio",
+        title: "Катя",
+        year: "2021",
+        place: "Санкт-Петербург",
+        short: "Студийная съемка с Катей.",
+        description:
+          "Эта серия появилась после одного из мероприятий, где меня порекомендовали как фотографа. Позже Катя обратилась ко мне уже за отдельной студийной съемкой, и мы реализовали этот фотосет вместе с визажистом-стилистом, которая помогала на площадке. В результате получилась серия, которая стала для меня важной частью ранней студийной практики. После этой съемки мы продолжили общение и в дальнейшем еще не раз возвращались к совместной работе.",
+        cover: "images/study-katya-photoset/cover.jpg",
+        images: [
+          "images/study-katya-photoset/01.jpg",
+          "images/study-katya-photoset/02.jpg",
+          "images/study-katya-photoset/03.jpg",
+          "images/study-katya-photoset/04.jpg",
+          "images/study-katya-photoset/05.jpg"
+        ]
+      },
       {
         id: "reportage-elagin-ostrov",
         category: "reportage",
@@ -2062,205 +2134,205 @@ const categoryLabels = {
         )
       },
       {
-  id: "asya-photowalk",
-  category: "photowalk",
-  title: "Ася",
-  year: "2021",
-  place: "Санкт-Петербург",
-  short: "Фотопрогулка с актрисой Асей Галимзяновой.",
-  description:
-    "Прогулка с актрисой Асей Галимзяновой. Одна из ранних фотопрогулок, уже не проба, а скорее начало более уверенной практики в этом формате. Простая и спокойная серия, к которой мне приятно возвращаться.",
-  cover: "images/asya-photowalk/cover.jpg",
-  images: [
-    "images/asya-photowalk/01.jpg",
-    "images/asya-photowalk/02.jpg",
-    "images/asya-photowalk/03.jpg",
-    "images/asya-photowalk/04.jpg",
-    "images/asya-photowalk/05.jpg",
-    "images/asya-photowalk/06.jpg",
-    "images/asya-photowalk/07.jpg",
-    "images/asya-photowalk/08.jpg",
-    "images/asya-photowalk/09.jpg"
-  ]
-},
+        id: "asya-photowalk",
+        category: "photowalk",
+        title: "Ася",
+        year: "2021",
+        place: "Санкт-Петербург",
+        short: "Фотопрогулка с актрисой Асей Галимзяновой.",
+        description:
+          "Прогулка с актрисой Асей Галимзяновой. Одна из ранних фотопрогулок, уже не проба, а скорее начало более уверенной практики в этом формате. Простая и спокойная серия, к которой мне приятно возвращаться.",
+        cover: "images/asya-photowalk/cover.jpg",
+        images: [
+          "images/asya-photowalk/01.jpg",
+          "images/asya-photowalk/02.jpg",
+          "images/asya-photowalk/03.jpg",
+          "images/asya-photowalk/04.jpg",
+          "images/asya-photowalk/05.jpg",
+          "images/asya-photowalk/06.jpg",
+          "images/asya-photowalk/07.jpg",
+          "images/asya-photowalk/08.jpg",
+          "images/asya-photowalk/09.jpg"
+        ]
+      },
       {
-  id: "photowalk-polina-and-dima",
-  category: "photowalk",
-  title: "Полина и Дима",
-  year: "2023",
-  place: "Санкт-Петербург",
-  short: "Фотопрогулка с Полиной и Димой по крышам.",
-  description:
-    "Полина предложила прогуляться по крышам и пофотографироваться, на что я согласился. В итоге получилась серия — живая, свободная, с городским воздухом, светом и ощущением самой прогулки.",
-  cover: "images/photowalk-polina-and-dima/cover.jpg",
-  images: [
-    "images/photowalk-polina-and-dima/01.jpg",
-    "images/photowalk-polina-and-dima/02.jpg",
-    "images/photowalk-polina-and-dima/03.jpg",
-    "images/photowalk-polina-and-dima/04.jpg",
-    "images/photowalk-polina-and-dima/05.jpg",
-    "images/photowalk-polina-and-dima/06.jpg",
-    "images/photowalk-polina-and-dima/07.jpg",
-    "images/photowalk-polina-and-dima/08.jpg",
-    "images/photowalk-polina-and-dima/09.jpg",
-    "images/photowalk-polina-and-dima/10.jpg",
-    "images/photowalk-polina-and-dima/11.jpg",
-    "images/photowalk-polina-and-dima/12.jpg",
-    "images/photowalk-polina-and-dima/13.jpg",
-    "images/photowalk-polina-and-dima/14.jpg",
-    "images/photowalk-polina-and-dima/15.jpg",
-    "images/photowalk-polina-and-dima/16.jpg"
-  ]
-},
+        id: "photowalk-polina-and-dima",
+        category: "photowalk",
+        title: "Полина и Дима",
+        year: "2023",
+        place: "Санкт-Петербург",
+        short: "Фотопрогулка с Полиной и Димой по крышам.",
+        description:
+          "Полина предложила прогуляться по крышам и пофотографироваться, на что я согласился. В итоге получилась серия — живая, свободная, с городским воздухом, светом и ощущением самой прогулки.",
+        cover: "images/photowalk-polina-and-dima/cover.jpg",
+        images: [
+          "images/photowalk-polina-and-dima/01.jpg",
+          "images/photowalk-polina-and-dima/02.jpg",
+          "images/photowalk-polina-and-dima/03.jpg",
+          "images/photowalk-polina-and-dima/04.jpg",
+          "images/photowalk-polina-and-dima/05.jpg",
+          "images/photowalk-polina-and-dima/06.jpg",
+          "images/photowalk-polina-and-dima/07.jpg",
+          "images/photowalk-polina-and-dima/08.jpg",
+          "images/photowalk-polina-and-dima/09.jpg",
+          "images/photowalk-polina-and-dima/10.jpg",
+          "images/photowalk-polina-and-dima/11.jpg",
+          "images/photowalk-polina-and-dima/12.jpg",
+          "images/photowalk-polina-and-dima/13.jpg",
+          "images/photowalk-polina-and-dima/14.jpg",
+          "images/photowalk-polina-and-dima/15.jpg",
+          "images/photowalk-polina-and-dima/16.jpg"
+        ]
+      },
       {
-  id: "reportage-unona-theatre",
-  category: "reportage",
-  title: "UNONA.L1-0B0V1o",
-  year: "2022",
-  place: "Театр «Вокруг»",
-  short: "Репортажная съемка спектакля театра «Вокруг».",
-  description:
-    "Серия снята на спектакле «UNONA.L1-0B0V1o» театра «Вокруг». В этой работе интересно то, что я находился внутри процесса не только как фотограф, но и как осветитель, участвующий в самом спектакле.",
-  cover: "images/reportage-unona-theatre/cover.jpg",
-  images: [
-    "images/reportage-unona-theatre/01.jpg",
-    "images/reportage-unona-theatre/02.jpg",
-    "images/reportage-unona-theatre/03.jpg",
-    "images/reportage-unona-theatre/04.jpg",
-    "images/reportage-unona-theatre/05.jpg",
-    "images/reportage-unona-theatre/06.jpg",
-    "images/reportage-unona-theatre/07.jpg",
-    "images/reportage-unona-theatre/08.jpg",
-    "images/reportage-unona-theatre/09.jpg",
-    "images/reportage-unona-theatre/10.jpg",
-    "images/reportage-unona-theatre/11.jpg",
-    "images/reportage-unona-theatre/12.jpg",
-    "images/reportage-unona-theatre/13.jpg",
-    "images/reportage-unona-theatre/14.jpg",
-    "images/reportage-unona-theatre/15.jpg",
-    "images/reportage-unona-theatre/16.jpg",
-    "images/reportage-unona-theatre/17.jpg",
-    "images/reportage-unona-theatre/18.jpg"
-  ]
-},
+        id: "reportage-unona-theatre",
+        category: "reportage",
+        title: "UNONA.L1-0B0V1o",
+        year: "2022",
+        place: "Театр «Вокруг»",
+        short: "Репортажная съемка спектакля театра «Вокруг».",
+        description:
+          "Серия снята на спектакле «UNONA.L1-0B0V1o» театра «Вокруг». В этой работе интересно то, что я находился внутри процесса не только как фотограф, но и как осветитель, участвующий в самом спектакле.",
+        cover: "images/reportage-unona-theatre/cover.jpg",
+        images: [
+          "images/reportage-unona-theatre/01.jpg",
+          "images/reportage-unona-theatre/02.jpg",
+          "images/reportage-unona-theatre/03.jpg",
+          "images/reportage-unona-theatre/04.jpg",
+          "images/reportage-unona-theatre/05.jpg",
+          "images/reportage-unona-theatre/06.jpg",
+          "images/reportage-unona-theatre/07.jpg",
+          "images/reportage-unona-theatre/08.jpg",
+          "images/reportage-unona-theatre/09.jpg",
+          "images/reportage-unona-theatre/10.jpg",
+          "images/reportage-unona-theatre/11.jpg",
+          "images/reportage-unona-theatre/12.jpg",
+          "images/reportage-unona-theatre/13.jpg",
+          "images/reportage-unona-theatre/14.jpg",
+          "images/reportage-unona-theatre/15.jpg",
+          "images/reportage-unona-theatre/16.jpg",
+          "images/reportage-unona-theatre/17.jpg",
+          "images/reportage-unona-theatre/18.jpg"
+        ]
+      },
       {
-  id: "photowalk-un",
-  category: "photowalk",
-  title: "Юн",
-  year: "2021",
-  place: "Санкт-Петербург",
-  short: "Прогулка с Юн.",
-  description:
-    "Эта серия началась со случайной встречи. Я увидел Юн во время прогулки по городу, предложил ей пофотографироваться, и спустя некоторое время мы договорились о полноценной съемке. Тогда она училась в балетной школе Эйфмана. Съемка получилась интересной и красивой. Позже, уже в 2022 году, Юн уехала на родину, в Японию.",
-  cover: "images/photowalk-un/covar.jpg",
-  images: [
-    "images/photowalk-un/01.jpg",
-    "images/photowalk-un/02.jpg",
-    "images/photowalk-un/03.jpg",
-    "images/photowalk-un/04.jpg",
-    "images/photowalk-un/05.jpg"
-  ]
-},
+        id: "photowalk-un",
+        category: "photowalk",
+        title: "Юн",
+        year: "2021",
+        place: "Санкт-Петербург",
+        short: "Прогулка с Юн.",
+        description:
+          "Эта серия началась со случайной встречи. Я увидел Юн во время прогулки по городу, предложил ей пофотографироваться, и спустя некоторое время мы договорились о полноценной съемке. Тогда она училась в балетной школе Эйфмана. Съемка получилась интересной и красивой. Позже, уже в 2022 году, Юн уехала на родину, в Японию.",
+        cover: "images/photowalk-un/covar.jpg",
+        images: [
+          "images/photowalk-un/01.jpg",
+          "images/photowalk-un/02.jpg",
+          "images/photowalk-un/03.jpg",
+          "images/photowalk-un/04.jpg",
+          "images/photowalk-un/05.jpg"
+        ]
+      },
       {
-  id: "actor-olesia",
-  category: "actor",
-  title: "Олеся",
-  year: "2025",
-  place: "Санкт-Петербург",
-  short: "Актерское портфолио. Олеся.",
-  description:
-    "Актерское портфолио Олеси Смирновой-Марцинкевич. Такой формат съемки может решать разные задачи: от нейтральной портретной базы для кастингов и анкет до более собранной серии с разными состояниями, типажами и интонациями. В данном случае это простой и востребованный вариант актерского портфолио, который одинаково уместен как для кино, так и для театральной среды.",
-  cover: "images/actor-olesia/cover.jpg",
-  images: Array.from({ length: 8 }, (_, index) =>
-    `images/actor-olesia/${String(index + 1).padStart(2, "0")}.jpg`
-  )
-},
+        id: "actor-olesia",
+        category: "actor",
+        title: "Олеся",
+        year: "2025",
+        place: "Санкт-Петербург",
+        short: "Актерское портфолио. Олеся.",
+        description:
+          "Актерское портфолио Олеси Смирновой-Марцинкевич. Такой формат съемки может решать разные задачи: от нейтральной портретной базы для кастингов и анкет до более собранной серии с разными состояниями, типажами и интонациями. В данном случае это простой и востребованный вариант актерского портфолио, который одинаково уместен как для кино, так и для театральной среды.",
+        cover: "images/actor-olesia/cover.jpg",
+        images: Array.from({ length: 8 }, (_, index) =>
+          `images/actor-olesia/${String(index + 1).padStart(2, "0")}.jpg`
+        )
+      },
       {
-  id: "photowalk-valeria",
-  category: "photowalk",
-  title: "Валерия",
-  year: "2023",
-  place: "Летний сад, Санкт-Петербург",
-  short: "Фотопрогулка с Валерией в Летнем саду — спокойная портретная серия, построенная на естественном свете.",
-  description:
-    "Эта серия появилась после того, как я предложил актрисе Валерии встретиться и поснимать в формате свободной фотопрогулки. Мы выбрали Летний сад в Петербурге и провели съемку без жесткой постановки. В итоге получилась очень цельная и светлая серия, к которой мне всегда приятно возвращаться.",
-  cover: "images/photowalk-valeria/cover.jpg",
-  images: [
-    "images/photowalk-valeria/01.jpg",
-    "images/photowalk-valeria/02.jpg",
-    "images/photowalk-valeria/03.jpg",
-    "images/photowalk-valeria/04.jpg",
-    "images/photowalk-valeria/05.jpg",
-    "images/photowalk-valeria/06.jpg",
-    "images/photowalk-valeria/07.jpg",
-    "images/photowalk-valeria/08.jpg",
-    "images/photowalk-valeria/09.jpg",
-    "images/photowalk-valeria/10.jpg"
-  ]
-},
+        id: "photowalk-valeria",
+        category: "photowalk",
+        title: "Валерия",
+        year: "2023",
+        place: "Летний сад, Санкт-Петербург",
+        short: "Фотопрогулка с Валерией в Летнем саду — спокойная портретная серия, построенная на естественном свете.",
+        description:
+          "Эта серия появилась после того, как я предложил актрисе Валерии встретиться и поснимать в формате свободной фотопрогулки. Мы выбрали Летний сад в Петербурге и провели съемку без жесткой постановки. В итоге получилась очень цельная и светлая серия, к которой мне всегда приятно возвращаться.",
+        cover: "images/photowalk-valeria/cover.jpg",
+        images: [
+          "images/photowalk-valeria/01.jpg",
+          "images/photowalk-valeria/02.jpg",
+          "images/photowalk-valeria/03.jpg",
+          "images/photowalk-valeria/04.jpg",
+          "images/photowalk-valeria/05.jpg",
+          "images/photowalk-valeria/06.jpg",
+          "images/photowalk-valeria/07.jpg",
+          "images/photowalk-valeria/08.jpg",
+          "images/photowalk-valeria/09.jpg",
+          "images/photowalk-valeria/10.jpg"
+        ]
+      },
       {
-  id: "photowalk-nastya-bulygina",
-  category: "photowalk",
-  title: "Настя Булыгина",
-  year: "2020",
-  place: "Санкт-Петербург, выставка «Гиперкуб»",
-  short: "Одна из самых ранних фотопрогулок — серия с актрисой Настей Булыгиной, снятая в пространстве световой интерактивной выставки.",
-  description:
-    "Эта серия для меня особенно важна как одна из первых фотопрогулок, которые я сделал уже именно как фотограф. Я предложил Насте Булыгиной — актрисе театра и кино — попробовать такой формат съемки, и она согласилась. Мы встретились на выставке «Гиперкуб», где в то время работала световая интерактивная экспозиция с инсталляциями и меняющимся пространством. Съемка происходила в движении, почти как свободное наблюдение: мы просто ходили по выставке, а я искал кадры в свете, отражениях, паузах и взаимодействии человека с этой средой. Что для меня особенно ценно — серия была снята не на профессиональный фотоаппарат, а фактически на видеокамеру, и при этом эти снимки до сих пор кажутся мне живыми и точными.",
-  cover: "images/photowalk-nastya-bulygina/cover.jpg",
-images: Array.from({ length: 17 }, (_, index) =>
-  `images/photowalk-nastya-bulygina/${String(index + 1).padStart(2, "0")}.jpg`
-)
-},
+        id: "photowalk-nastya-bulygina",
+        category: "photowalk",
+        title: "Настя Булыгина",
+        year: "2020",
+        place: "Санкт-Петербург, выставка «Гиперкуб»",
+        short: "Одна из самых ранних фотопрогулок — серия с актрисой Настей Булыгиной, снятая в пространстве световой интерактивной выставки.",
+        description:
+          "Эта серия для меня особенно важна как одна из первых фотопрогулок, которые я сделал уже именно как фотограф. Я предложил Насте Булыгиной — актрисе театра и кино — попробовать такой формат съемки, и она согласилась. Мы встретились на выставке «Гиперкуб», где в то время работала световая интерактивная экспозиция с инсталляциями и меняющимся пространством. Съемка происходила в движении, почти как свободное наблюдение: мы просто ходили по выставке, а я искал кадры в свете, отражениях, паузах и взаимодействии человека с этой средой. Что для меня особенно ценно — серия была снята не на профессиональный фотоаппарат, а фактически на видеокамеру, и при этом эти снимки до сих пор кажутся мне живыми и точными.",
+        cover: "images/photowalk-nastya-bulygina/cover.jpg",
+        images: Array.from({ length: 17 }, (_, index) =>
+          `images/photowalk-nastya-bulygina/${String(index + 1).padStart(2, "0")}.jpg`
+        )
+      },
       {
-  id: "photoset-olesia-vereteno",
-  category: "studio",
-  title: "Олеся",
-  year: "2025",
-  place: "Студия VERETENO",
-  short: "Черно-белая студийная серия с Олесей Смирновой-Марцинкевич, снятая в студии VERETENO.",
-  description:
-    "В работе отталкивались от брифа и заранее собранных референсов, пробовали разные схемы студийного света и несколько визуальных состояний внутри одной съемки. В проекте работала команда: стиль — Евгения Поморянская, мейк — Алина.",
-  cover: "images/photoset-olesia-vereteno/cover.jpg",
-  images: [
-    "images/photoset-olesia-vereteno/01.jpg",
-    "images/photoset-olesia-vereteno/02.jpg",
-    "images/photoset-olesia-vereteno/03.jpg",
-    "images/photoset-olesia-vereteno/04.jpg",
-    "images/photoset-olesia-vereteno/05.jpg",
-    "images/photoset-olesia-vereteno/06.jpg",
-    "images/photoset-olesia-vereteno/07.jpg",
-    "images/photoset-olesia-vereteno/08.jpg"
-  ]
-},
+        id: "photoset-olesia-vereteno",
+        category: "studio",
+        title: "Олеся",
+        year: "2025",
+        place: "Студия VERETENO",
+        short: "Черно-белая студийная серия с Олесей Смирновой-Марцинкевич, снятая в студии VERETENO.",
+        description:
+          "В работе отталкивались от брифа и заранее собранных референсов, пробовали разные схемы студийного света и несколько визуальных состояний внутри одной съемки. В проекте работала команда: стиль — Евгения Поморянская, мейк — Алина.",
+        cover: "images/photoset-olesia-vereteno/cover.jpg",
+        images: [
+          "images/photoset-olesia-vereteno/01.jpg",
+          "images/photoset-olesia-vereteno/02.jpg",
+          "images/photoset-olesia-vereteno/03.jpg",
+          "images/photoset-olesia-vereteno/04.jpg",
+          "images/photoset-olesia-vereteno/05.jpg",
+          "images/photoset-olesia-vereteno/06.jpg",
+          "images/photoset-olesia-vereteno/07.jpg",
+          "images/photoset-olesia-vereteno/08.jpg"
+        ]
+      },
       {
-  id: "misha-shelomencev-photowalk",
-  category: "photowalk",
-  title: "Прогулка с Мишей Шеломенцевым",
-  year: "2021",
-  place: "Санкт-Петербург",
-  short: "Одна из ранних фотопрогулок с актером театра и кино Мишей.",
-  description:
-    "Одна из первых фотопрогулок с актером театра и кино Мишей Шеломенцевым. Тогда у меня была камера, больше рассчитанная на видеосъемку, но я все равно пробовал снимать, учился и искал свой подход. В итоге получилась серия, которая до сих пор мне нравится. Мише тоже.",
-  cover: "images/misha-shelomencev-photowalk/cover.jpg",
-  images: Array.from({ length: 11 }, (_, index) =>
-    `images/misha-shelomencev-photowalk/${String(index + 1).padStart(2, "0")}.jpg`
-  )
-},
+        id: "misha-shelomencev-photowalk",
+        category: "photowalk",
+        title: "Прогулка с Мишей Шеломенцевым",
+        year: "2021",
+        place: "Санкт-Петербург",
+        short: "Одна из ранних фотопрогулок с актером театра и кино Мишей.",
+        description:
+          "Одна из первых фотопрогулок с актером театра и кино Мишей Шеломенцевым. Тогда у меня была камера, больше рассчитанная на видеосъемку, но я все равно пробовал снимать, учился и искал свой подход. В итоге получилась серия, которая до сих пор мне нравится. Мише тоже.",
+        cover: "images/misha-shelomencev-photowalk/cover.jpg",
+        images: Array.from({ length: 11 }, (_, index) =>
+          `images/misha-shelomencev-photowalk/${String(index + 1).padStart(2, "0")}.jpg`
+        )
+      },
       {
-  id: "photoset-na-zalive",
-  category: "creative",
-  title: "На заливе",
-  year: "2023",
-  place: "Канонерский остров, Санкт-Петербург",
-  short: "Съемка дипломной работы стилиста Евгении Поморянской.",
-  description:
-    "Эта серия была снята на Канонерском острове в Санкт-Петербурге во время работы над дипломным проектом стилиста Евгении Поморянской для Fashion Factory School. На площадке работал основной фотограф, а я оказался там скорее по приглашению и из интереса к процессу — взял с собой одну вспышку и решил попробовать поснимать. В результате получились кадры, которые команда использовала вместе с материалом основного фотографа. Для меня эта съемка стала важным опытом: в довольно свободной, импровизационной ситуации удалось точно попасть в задачу и сделать серию, которая до сих пор кажется мне удачной и цельной.",
-  cover: "images/photoset-na-zalive/cover.jpg",
-  images: Array.from({ length: 10 }, (_, index) =>
-    `images/photoset-na-zalive/${String(index + 1).padStart(2, "0")}.jpg`
-  )
-},
+        id: "photoset-na-zalive",
+        category: "creative",
+        title: "На заливе",
+        year: "2023",
+        place: "Канонерский остров, Санкт-Петербург",
+        short: "Съемка дипломной работы стилиста Евгении Поморянской.",
+        description:
+          "Эта серия была снята на Канонерском острове в Санкт-Петербурге во время работы над дипломным проектом стилиста Евгении Поморянской для Fashion Factory School. На площадке работал основной фотограф, а я оказался там скорее по приглашению и из интереса к процессу — взял с собой одну вспышку и решил попробовать поснимать. В результате получились кадры, которые команда использовала вместе с материалом основного фотографа. Для меня эта съемка стала важным опытом: в довольно свободной, импровизационной ситуации удалось точно попасть в задачу и сделать серию, которая до сих пор кажется мне удачной и цельной.",
+        cover: "images/photoset-na-zalive/cover.jpg",
+        images: Array.from({ length: 10 }, (_, index) =>
+          `images/photoset-na-zalive/${String(index + 1).padStart(2, "0")}.jpg`
+        )
+      },
       {
         id: "studiynaya-photoset-vereteno",
         category: "studio",
@@ -2283,19 +2355,19 @@ images: Array.from({ length: 17 }, (_, index) =>
         ]
       },
       {
-  id: "group-photoalbom-hkola",
-  category: "group",
-  title: "Школьный фотоальбом",
-  year: "2024",
-  place: "Санкт-Петербург",
-  short: "Серия групповых и индивидуальных снимков, созданная для школьного фотоальбома.",
-  description:
-    "Серия была снята для школьного фотоальбома под руководством классных руководителей. За одну съемку нужно было организованно отснять около двадцати пяти человек, сохраняя общий ритм, внимание к каждому участнику и цельность всей серии. Это пример групповой съемки, где важны не только отдельные портреты, но и общая структура итогового проекта. По отзывам, готовый альбом получился очень красивым.",
-  cover: "images/group-photoalbom-hkola/cover.jpg",
-  images: Array.from({ length: 23 }, (_, index) =>
-    `images/group-photoalbom-hkola/${String(index + 1).padStart(2, "0")}.jpg`
-  )
-},
+        id: "group-photoalbom-hkola",
+        category: "group",
+        title: "Школьный фотоальбом",
+        year: "2024",
+        place: "Санкт-Петербург",
+        short: "Серия групповых и индивидуальных снимков, созданная для школьного фотоальбома.",
+        description:
+          "Серия была снята для школьного фотоальбома под руководством классных руководителей. За одну съемку нужно было организованно отснять около двадцати пяти человек, сохраняя общий ритм, внимание к каждому участнику и цельность всей серии. Это пример групповой съемки, где важны не только отдельные портреты, но и общая структура итогового проекта. По отзывам, готовый альбом получился очень красивым.",
+        cover: "images/group-photoalbom-hkola/cover.jpg",
+        images: Array.from({ length: 23 }, (_, index) =>
+          `images/group-photoalbom-hkola/${String(index + 1).padStart(2, "0")}.jpg`
+        )
+      },
       {
         id: "photo-walk",
         category: "photowalk",
@@ -2317,8 +2389,8 @@ images: Array.from({ length: 17 }, (_, index) =>
       }
     ];
 
-   const filterOrder = ["all", "reportage", "photowalk", "actor", "group", "studio", "creative", "backstage", "nature"];
-    
+    const filterOrder = ["all", "reportage", "photowalk", "actor", "group", "studio", "creative", "backstage", "nature"];
+
     const siteHeader = document.getElementById("siteHeader");
 
     const filtersContainer = document.getElementById("filters");
@@ -2363,8 +2435,8 @@ images: Array.from({ length: 17 }, (_, index) =>
     let touchStartX = 0;
     let touchStartY = 0;
     let viewerSingleClickTimer = null;
-let suppressFullscreenClick = false;
-let lastMobileTapTime = 0;
+    let suppressFullscreenClick = false;
+    let lastMobileTapTime = 0;
 
     const desktopFullscreenDrag = {
       active: false,
@@ -2582,24 +2654,24 @@ let lastMobileTapTime = 0;
       );
     }
 
-function updateViewerExitButtonState() {
-  if (isDesktopFullscreenViewer()) {
-    projectViewerExitButton.setAttribute("aria-label", "Выйти из полноэкранного режима");
-    return;
-  }
+    function updateViewerExitButtonState() {
+      if (isDesktopFullscreenViewer()) {
+        projectViewerExitButton.setAttribute("aria-label", "Выйти из полноэкранного режима");
+        return;
+      }
 
-  if (isMobileLandscape()) {
-    projectViewerExitButton.setAttribute("aria-label", "Закрыть проект");
-    return;
-  }
+      if (isMobileLandscape()) {
+        projectViewerExitButton.setAttribute("aria-label", "Закрыть проект");
+        return;
+      }
 
-  if (isMobileViewport() && isMobileFocusMode) {
-    projectViewerExitButton.setAttribute("aria-label", "Вернуться к галерее");
-    return;
-  }
+      if (isMobileViewport() && isMobileFocusMode) {
+        projectViewerExitButton.setAttribute("aria-label", "Вернуться к галерее");
+        return;
+      }
 
-  projectViewerExitButton.setAttribute("aria-label", "Закрыть");
-}
+      projectViewerExitButton.setAttribute("aria-label", "Закрыть");
+    }
 
     function updateDescriptionButtonState() {
       const showButton = currentProject && isMobilePortrait() && !isMobileFocusMode;
@@ -2849,32 +2921,34 @@ function updateViewerExitButtonState() {
       projectDescriptionOverlay.setAttribute("aria-hidden", "true");
       isDescriptionOverlayOpen = false;
     }
-function exitMobileFullscreenView() {
-  if (!isMobileViewport()) return;
 
-  if (isMobileLandscape()) {
-    closeProjectModal();
-    return;
-  }
+    function exitMobileFullscreenView() {
+      if (!isMobileViewport()) return;
 
-  if (isMobileFocusMode) {
-    isMobileFocusMode = false;
-    syncProjectResponsiveState();
-    return;
-  }
+      if (isMobileLandscape()) {
+        closeProjectModal();
+        return;
+      }
 
-  closeProjectModal();
-}
+      if (isMobileFocusMode) {
+        isMobileFocusMode = false;
+        syncProjectResponsiveState();
+        return;
+      }
 
-async function exitDesktopFullscreenView() {
-  clearViewerSingleClickTimer();
-  resetDesktopFullscreenDrag(false);
-  suppressFullscreenClick = true;
-  await exitCurrentFullscreen();
-  setTimeout(() => {
-    suppressFullscreenClick = false;
-  }, 80);
-}
+      closeProjectModal();
+    }
+
+    async function exitDesktopFullscreenView() {
+      clearViewerSingleClickTimer();
+      resetDesktopFullscreenDrag(false);
+      suppressFullscreenClick = true;
+      await exitCurrentFullscreen();
+      setTimeout(() => {
+        suppressFullscreenClick = false;
+      }, 80);
+    }
+
     function openBioModal() {
       bioModal.classList.add("is-open");
       bioModal.setAttribute("aria-hidden", "false");
@@ -2896,51 +2970,51 @@ async function exitDesktopFullscreenView() {
       touchStartY = event.touches[0].clientY;
     }
 
-function onImageTouchEnd(event) {
-  if (!currentProject || !currentProject.images.length) return;
-  if (isDescriptionOverlayOpen) return;
-  if (!touchStartX && !touchStartY) return;
+    function onImageTouchEnd(event) {
+      if (!currentProject || !currentProject.images.length) return;
+      if (isDescriptionOverlayOpen) return;
+      if (!touchStartX && !touchStartY) return;
 
-  const touch = event.changedTouches[0];
-  const diffX = touch.clientX - touchStartX;
-  const diffY = touch.clientY - touchStartY;
-  const absX = Math.abs(diffX);
-  const absY = Math.abs(diffY);
-  const isMobileFullscreenLike = isMobileViewport() && (isMobileFocusMode || isMobileLandscape());
+      const touch = event.changedTouches[0];
+      const diffX = touch.clientX - touchStartX;
+      const diffY = touch.clientY - touchStartY;
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
+      const isMobileFullscreenLike = isMobileViewport() && (isMobileFocusMode || isMobileLandscape());
 
-  touchStartX = 0;
-  touchStartY = 0;
+      touchStartX = 0;
+      touchStartY = 0;
 
-  if (isMobileFullscreenLike && diffY > 85 && absY > absX) {
-    exitMobileFullscreenView();
-    return;
-  }
+      if (isMobileFullscreenLike && diffY > 85 && absY > absX) {
+        exitMobileFullscreenView();
+        return;
+      }
 
-  if (absX >= 40 && absX > absY) {
-    if (diffX < 0) {
-      showNextImage();
-    } else {
-      showPrevImage();
-    }
-    lastMobileTapTime = 0;
-    return;
-  }
+      if (absX >= 40 && absX > absY) {
+        if (diffX < 0) {
+          showNextImage();
+        } else {
+          showPrevImage();
+        }
+        lastMobileTapTime = 0;
+        return;
+      }
 
-  if (isMobileFullscreenLike && absX < 14 && absY < 14) {
-    const now = Date.now();
+      if (isMobileFullscreenLike && absX < 14 && absY < 14) {
+        const now = Date.now();
 
-    if (now - lastMobileTapTime < 280) {
+        if (now - lastMobileTapTime < 280) {
+          lastMobileTapTime = 0;
+          exitMobileFullscreenView();
+          return;
+        }
+
+        lastMobileTapTime = now;
+        return;
+      }
+
       lastMobileTapTime = 0;
-      exitMobileFullscreenView();
-      return;
     }
-
-    lastMobileTapTime = now;
-    return;
-  }
-
-  lastMobileTapTime = 0;
-}
 
     function updateDesktopFullscreenCursor(event) {
       if (!isDesktopFullscreenViewer()) {
@@ -3087,28 +3161,28 @@ function onImageTouchEnd(event) {
     projectImageWrap.addEventListener("pointerup", onDesktopFullscreenPointerUp);
     projectImageWrap.addEventListener("pointercancel", onDesktopFullscreenPointerCancel);
 
-   projectViewerExitButton.addEventListener("pointerdown", (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-});
+    projectViewerExitButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
 
-projectViewerExitButton.addEventListener("click", async (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-  clearViewerSingleClickTimer();
+    projectViewerExitButton.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      clearViewerSingleClickTimer();
 
-  if (isDesktopFullscreenViewer()) {
-    await exitDesktopFullscreenView();
-    return;
-  }
+      if (isDesktopFullscreenViewer()) {
+        await exitDesktopFullscreenView();
+        return;
+      }
 
-  if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
-    exitMobileFullscreenView();
-    return;
-  }
+      if (isMobileViewport() && (isMobileFocusMode || isMobileLandscape())) {
+        exitMobileFullscreenView();
+        return;
+      }
 
-  closeProjectModal();
-});
+      closeProjectModal();
+    });
 
     projectMainImage.addEventListener("dblclick", (event) => {
       clearViewerSingleClickTimer();
