@@ -658,9 +658,17 @@
       font-size: 13px;
     }
 
+html.modal-open,
+body.modal-open {
+  background: var(--viewer-fullscreen-bg);
+}
+
 .modal {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 120;
   display: none;
   overflow-x: hidden;
@@ -668,8 +676,9 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: 0;
-  width: 100vw;
-  height: 100dvh;
+  margin: 0;
+  width: auto;
+  height: auto;
 }
 
 .modal.is-open {
@@ -677,14 +686,38 @@
 }
 
 .modal.is-mobile-fullscreen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: var(--viewer-fullscreen-bg);
   overflow: hidden;
-  width: 100vw;
-  height: 100dvh;
+  margin: 0;
+  padding: 0;
 }
 
 .modal.is-mobile-fullscreen .modal__backdrop {
   display: none;
+}
+
+.modal.is-mobile-fullscreen .modal__dialog--project {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--viewer-fullscreen-bg);
+  box-shadow: none;
 }
 
     .modal__backdrop {
