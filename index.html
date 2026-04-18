@@ -1645,17 +1645,24 @@ body.modal-open {
       height: 40px;
     }
 
-    .modal__dialog--project.is-mobile-focus,
-    .modal__dialog--project.is-mobile-landscape {
-      width: 100vw;
-      max-width: none;
-      min-height: 100dvh;
-      height: 100dvh;
-      margin: 0;
-      border-radius: 0;
-      border: 0;
-      background: var(--viewer-fullscreen-bg);
-    }
+   .modal__dialog--project.is-mobile-focus,
+.modal__dialog--project.is-mobile-landscape {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  max-width: none;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  background: var(--viewer-fullscreen-bg);
+  box-shadow: none;
+}
 
     .modal__dialog--project.is-mobile-focus .modal__header,
     .modal__dialog--project.is-mobile-landscape .modal__header {
