@@ -2853,16 +2853,16 @@ const categoryLabels = {
       projectThumbs.innerHTML = "";
 
       projectDialog.classList.remove(
-        "is-mobile-layout",
-        "is-mobile-focus",
-        "is-mobile-landscape",
-        "is-desktop-gallery-expanded"
-      );
+  "is-mobile-layout",
+  "is-mobile-focus",
+  "is-mobile-landscape",
+  "is-desktop-gallery-expanded"
+);
+projectModal.classList.remove("is-mobile-fullscreen");
 
-      projectImageWrap.classList.remove("cursor-left", "cursor-right");
-      setModalBodyLock();
-    }
-
+projectImageWrap.classList.remove("cursor-left", "cursor-right");
+setModalBodyLock();
+      
     function showPrevImage() {
       if (!currentProject || currentProject.images.length < 2) return;
       currentImageIndex =
