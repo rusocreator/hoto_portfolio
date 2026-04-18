@@ -658,20 +658,34 @@
       font-size: 13px;
     }
 
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 120;
-      display: none;
-      overflow-y: auto;
-      overscroll-behavior-y: contain;
-      -webkit-overflow-scrolling: touch;
-      padding: 0;
-    }
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+}
 
-    .modal.is-open {
-      display: block;
-    }
+.modal.is-open {
+  display: block;
+}
+
+.modal.is-mobile-fullscreen {
+  background: var(--viewer-fullscreen-bg);
+  overflow: hidden;
+  width: 100vw;
+  height: 100dvh;
+}
+
+.modal.is-mobile-fullscreen .modal__backdrop {
+  display: none;
+}
 
     .modal__backdrop {
       position: absolute;
