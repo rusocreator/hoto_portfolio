@@ -3009,60 +3009,90 @@ let suppressFullscreenClick = false;
       setModalBodyLock();
     }
 
-    function onImageTouchStart(event) {
-      if (!currentProject || currentProject.images.length < 2) return;
-      if (isDescriptionOverlayOpen) return;
-      if (event.touches.length !== 1) return;
+function onImageTouchStart(event) {
+  if (!currentProject || !currentProject.images.length) return;
+  if (isDescriptionOverlayOpen) return;
+  if (event.touches.length !== 1) return;
 
-      touchStartX = event.touches[0].clientX;
-      touchStartY = event.touches[0].clientY;
+  const touch = event.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+  touchCurrentX = touch.clientX;
+  touchCurrentY = touch.clientY;
+  touchMoved = false;
+}
+
+function onImageTouchMove(event) {
+  if (!currentProject || !currentProject.images.length) return;
+  if (isDescriptionOverlayOpen) return;
+  if (!touchStartX && !touchStartY) return;
+  if (event.touches.length !== 1) return;
+
+  const touch = event.touches[0];
+  touchCurrentX = touch.clientX;
+  touchCurrentY = touch.clientY;
+
+  const diffX = touchCurrentX - touchStartX;
+  const diffY = touchCurrentY - touchStartY;
+
+  if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
+    touchMoved = true;
+  }
+
+  if (isMobileViewport()) {
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      event.preventDefault();
+    }
+  }
+}
+
+function onImageTouchEnd(event) {
+  if (!currentProject || !currentProject.images.length) return;
+  if (isDescriptionOverlayOpen) return;
+  if (!touchStartX && !touchStartY) return;
+
+  const touch = event.changedTouches[0];
+  const endX = touch?.clientX ?? touchCurrentX;
+  const endY = touch?.clientY ?? touchCurrentY;
+  const diffX = endX - touchStartX;
+  const diffY = endY - touchStartY;
+  const absX = Math.abs(diffX);
+  const absY = Math.abs(diffY);
+  const isMobileFullscreenLike = isMobileViewport() && (isMobileFocusMode || isMobileLandscape());
+
+  const startX = touchStartX;
+  const startY = touchStartY;
+
+  touchStartX = 0;
+  touchStartY = 0;
+  touchCurrentX = 0;
+  touchCurrentY = 0;
+
+  if (absX >= 40 && absX > absY) {
+    if (diffX < 0) {
+      showNextImage();
+    } else {
+      showPrevImage();
+    }
+    touchMoved = false;
+    return;
+  }
+
+  if (isMobileFullscreenLike && !touchMoved && absX < 12 && absY < 12) {
+    const rect = projectImageWrap.getBoundingClientRect();
+    const tapX = startX - rect.left;
+
+    if (tapX < rect.width / 2) {
+      showPrevImage();
+    } else {
+      showNextImage();
     }
 
-    function onImageTouchEnd(event) {
-      if (!currentProject || !currentProject.images.length) return;
-      if (isDescriptionOverlayOpen) return;
-      if (!touchStartX && !touchStartY) return;
+    return;
+  }
 
-      const touch = event.changedTouches[0];
-      const diffX = touch.clientX - touchStartX;
-      const diffY = touch.clientY - touchStartY;
-      const absX = Math.abs(diffX);
-      const absY = Math.abs(diffY);
-      const isMobileFullscreenLike = isMobileViewport() && (isMobileFocusMode || isMobileLandscape());
-
-      touchStartX = 0;
-      touchStartY = 0;
-
-      if (isMobileFullscreenLike && diffY > 85 && absY > absX) {
-        exitMobileFullscreenView();
-        return;
-      }
-
-      if (absX >= 40 && absX > absY) {
-        if (diffX < 0) {
-          showNextImage();
-        } else {
-          showPrevImage();
-        }
-        lastMobileTapTime = 0;
-        return;
-      }
-
-      if (isMobileFullscreenLike && absX < 14 && absY < 14) {
-        const now = Date.now();
-
-        if (now - lastMobileTapTime < 280) {
-          lastMobileTapTime = 0;
-          exitMobileFullscreenView();
-          return;
-        }
-
-        lastMobileTapTime = now;
-        return;
-      }
-
-      lastMobileTapTime = 0;
-    }
+  touchMoved = false;
+}
 
     function updateDesktopFullscreenCursor(event) {
       if (!isDesktopFullscreenViewer()) {
