@@ -2571,11 +2571,13 @@ const categoryLabels = {
       });
     }
 
-    function setModalBodyLock() {
-      const hasOpenModal =
-        projectModal.classList.contains("is-open") || bioModal.classList.contains("is-open");
-      document.body.classList.toggle("modal-open", hasOpenModal);
-    }
+   function setModalBodyLock() {
+  const hasOpenModal =
+    projectModal.classList.contains("is-open") || bioModal.classList.contains("is-open");
+
+  document.body.classList.toggle("modal-open", hasOpenModal);
+  document.documentElement.classList.toggle("modal-open", hasOpenModal);
+}
 
     function isMobileViewport() {
       return window.innerWidth <= 900;
