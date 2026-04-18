@@ -2828,40 +2828,41 @@ const categoryLabels = {
       setModalBodyLock();
     }
 
-    function closeProjectModal() {
-      closeProjectDescriptionOverlay();
-      clearViewerSingleClickTimer();
-      resetDesktopFullscreenDrag(false);
+ function closeProjectModal() {
+  closeProjectDescriptionOverlay();
+  clearViewerSingleClickTimer();
+  resetDesktopFullscreenDrag(false);
 
-      if (!isMobileViewport()) {
-        exitCurrentFullscreen();
-      }
+  if (!isMobileViewport()) {
+    exitCurrentFullscreen();
+  }
 
-      projectModal.classList.remove("is-open");
-      projectModal.setAttribute("aria-hidden", "true");
+  projectModal.classList.remove("is-open");
+  projectModal.setAttribute("aria-hidden", "true");
 
-      currentProject = null;
-      currentImageIndex = 0;
-      isMobileFocusMode = false;
-      isDescriptionOverlayOpen = false;
-      isDesktopGalleryExpanded = false;
-      thumbButtons = [];
+  currentProject = null;
+  currentImageIndex = 0;
+  isMobileFocusMode = false;
+  isDescriptionOverlayOpen = false;
+  isDesktopGalleryExpanded = false;
+  thumbButtons = [];
 
-      projectMainImage.src = "";
-      projectMainImage.alt = "";
-      projectImageCounter.textContent = "1 / 1";
-      projectThumbs.innerHTML = "";
+  projectMainImage.src = "";
+  projectMainImage.alt = "";
+  projectImageCounter.textContent = "1 / 1";
+  projectThumbs.innerHTML = "";
 
-      projectDialog.classList.remove(
-  "is-mobile-layout",
-  "is-mobile-focus",
-  "is-mobile-landscape",
-  "is-desktop-gallery-expanded"
-);
-projectModal.classList.remove("is-mobile-fullscreen");
+  projectDialog.classList.remove(
+    "is-mobile-layout",
+    "is-mobile-focus",
+    "is-mobile-landscape",
+    "is-desktop-gallery-expanded"
+  );
+  projectModal.classList.remove("is-mobile-fullscreen");
 
-projectImageWrap.classList.remove("cursor-left", "cursor-right");
-setModalBodyLock();
+  projectImageWrap.classList.remove("cursor-left", "cursor-right");
+  setModalBodyLock();
+}
       
     function showPrevImage() {
       if (!currentProject || currentProject.images.length < 2) return;
