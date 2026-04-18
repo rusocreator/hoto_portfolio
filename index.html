@@ -3224,8 +3224,16 @@ function onImageTouchEnd(event) {
     preventDoubleTapZoom(projectHeaderDescriptionButton);
     preventDoubleTapZoom(closeProjectDescriptionButton);
 
-    projectImageWrap.addEventListener("touchstart", onImageTouchStart, { passive: true });
-    projectImageWrap.addEventListener("touchend", onImageTouchEnd, { passive: true });
+   projectImageWrap.addEventListener("touchstart", onImageTouchStart, { passive: true });
+projectImageWrap.addEventListener("touchmove", onImageTouchMove, { passive: false });
+projectImageWrap.addEventListener("touchend", onImageTouchEnd, { passive: true });
+projectImageWrap.addEventListener("touchcancel", () => {
+  touchStartX = 0;
+  touchStartY = 0;
+  touchCurrentX = 0;
+  touchCurrentY = 0;
+  touchMoved = false;
+});
 
     projectImageWrap.addEventListener("mousemove", updateDesktopFullscreenCursor);
     projectImageWrap.addEventListener("mouseenter", updateDesktopFullscreenCursor);
