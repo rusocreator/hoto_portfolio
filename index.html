@@ -2467,17 +2467,19 @@ const categoryLabels = {
     const openBioButtonHero = document.getElementById("openBioButtonHero");
 
     let currentFilter = "all";
-    let currentProject = null;
-    let currentImageIndex = 0;
-    let isMobileFocusMode = false;
-    let isDescriptionOverlayOpen = false;
-    let isDesktopGalleryExpanded = false;
-    let thumbButtons = [];
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let viewerSingleClickTimer = null;
-    let suppressFullscreenClick = false;
-    let lastMobileTapTime = 0;
+let currentProject = null;
+let currentImageIndex = 0;
+let isMobileFocusMode = false;
+let isDescriptionOverlayOpen = false;
+let isDesktopGalleryExpanded = false;
+let thumbButtons = [];
+let touchStartX = 0;
+let touchStartY = 0;
+let touchCurrentX = 0;
+let touchCurrentY = 0;
+let touchMoved = false;
+let viewerSingleClickTimer = null;
+let suppressFullscreenClick = false;
 
     const desktopFullscreenDrag = {
       active: false,
