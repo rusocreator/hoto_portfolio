@@ -2766,33 +2766,35 @@ const categoryLabels = {
     }
 
     function syncProjectResponsiveState() {
-      const mobile = isMobileViewport();
-      const landscape = isMobileLandscape();
+  const mobile = isMobileViewport();
+  const landscape = isMobileLandscape();
+  const isMobileFullscreenLike = mobile && (isMobileFocusMode || landscape);
 
-      if (!mobile) {
-        isMobileFocusMode = false;
-      }
+  if (!mobile) {
+    isMobileFocusMode = false;
+  }
 
-      if (landscape) {
-        isMobileFocusMode = true;
-        closeProjectDescriptionOverlay();
-      }
+  if (landscape) {
+    isMobileFocusMode = true;
+    closeProjectDescriptionOverlay();
+  }
 
-      if (!mobile) {
-        closeProjectDescriptionOverlay();
-      }
+  if (!mobile) {
+    closeProjectDescriptionOverlay();
+  }
 
-      if (mobile) {
-        isDesktopGalleryExpanded = false;
-      }
+  if (mobile) {
+    isDesktopGalleryExpanded = false;
+  }
 
-      projectDialog.classList.toggle("is-mobile-layout", mobile);
-      projectDialog.classList.toggle("is-mobile-focus", mobile && isMobileFocusMode);
-      projectDialog.classList.toggle("is-mobile-landscape", mobile && landscape);
+  projectDialog.classList.toggle("is-mobile-layout", mobile);
+  projectDialog.classList.toggle("is-mobile-focus", mobile && isMobileFocusMode);
+  projectDialog.classList.toggle("is-mobile-landscape", mobile && landscape);
+  projectModal.classList.toggle("is-mobile-fullscreen", isMobileFullscreenLike);
 
-      updateProjectControls();
-      updateThumbsActiveState();
-    }
+  updateProjectControls();
+  updateThumbsActiveState();
+}
 
     function openProjectModal(projectId) {
       const project = portfolioData.find((item) => item.id === projectId);
